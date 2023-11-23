@@ -9,8 +9,8 @@ import Foundation
 
 
 
-struct StructUploadFileDetails {
-    var fileInfo: structFileInfo?
+struct StructUploadFileDetails : Codable {
+    var fileInfo: StructFileInfo?
     var chunkFilePathArray = [String]()
     var chunkFileURLArray = [URL]()
     var totalNumberOfChuncks: Int?
@@ -20,7 +20,10 @@ struct StructUploadFileDetails {
 }
 
 
-struct structFileInfo {
+
+
+
+struct StructFileInfo : Codable{
     var fileName: String
     var filePath: String
     var fileExtention: String

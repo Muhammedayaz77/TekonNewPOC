@@ -8,7 +8,7 @@
 import Foundation
 
 
-func splitVideoInto5MBChunks(fileInfo: structFileInfo)  {
+func splitVideoInto5MBChunks(fileInfo: StructFileInfo)  {
     
     //let filename: NSString = getFileName(fileURL: videoUrl) as NSString
 //    let pathExtention = filename.pathExtension

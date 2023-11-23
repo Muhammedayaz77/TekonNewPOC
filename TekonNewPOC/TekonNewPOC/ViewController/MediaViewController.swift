@@ -20,7 +20,7 @@ class MediaViewController: BaseViewController {
         
         let fileName = "test.mp4"
         //Get file Info
-        let fileInfoObj : structFileInfo = getFileDetails(fileName: fileName)
+        let fileInfoObj : StructFileInfo = getFileDetails(fileName: fileName)
         //Split Video In chunks
         splitVideoInto5MBChunks(fileInfo: fileInfoObj)
         //Fill Goble Varibale
@@ -53,17 +53,17 @@ class MediaViewController: BaseViewController {
     
     
     
-    func getFileDetails(fileName : String) ->  structFileInfo {
+    func getFileDetails(fileName : String) ->  StructFileInfo {
         let fileURL = getDocumentDirectoriesPathURL().appendingPathComponent(fileName)
         let filePath = getDocumentDirectoriesPath().appendSlash.appending(fileName)
         let fileExtention = getFileExtensionFromURL(fileURL: fileURL)
         let fileNameWithoutExt = getFileNameWithoutExtension(fileURL: fileURL)
         
-        let fileInfo = structFileInfo(fileName: fileName, filePath: filePath, fileExtention: fileExtention, fileURL: fileURL, fileNameWithoutExt: fileNameWithoutExt)
+        let fileInfo = StructFileInfo(fileName: fileName, filePath: filePath, fileExtention: fileExtention, fileURL: fileURL, fileNameWithoutExt: fileNameWithoutExt)
         return fileInfo
     }
     
-    func getUploadFileDetails(fileInfoObj : structFileInfo) ->  StructUploadFileDetails {
+    func getUploadFileDetails(fileInfoObj : StructFileInfo) ->  StructUploadFileDetails {
         
         let fileManager = FileManager.default
         let folderPath = getDocumentDirectoriesPathURL().appendingPathComponent(fileInfoObj.fileNameWithoutExt)
@@ -182,9 +182,7 @@ class MediaViewController: BaseViewController {
         
         APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
             print(responceCompleteMultipartUpload)
+            
         }
-        
-        
     }
-    
 }

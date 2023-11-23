@@ -15,18 +15,14 @@ class UserDefaltClass: NSObject {
     }
     
     
-//    func setUploadFileDetails(UploadFileDetails:StructUploadFileDetails) {
-//        let encoder = JSONEncoder()
-//        if let encoded = try? encoder.encode(UploadFileDetails) {
-//            let defaults = UserDefaults.standard
-//            defaults.set(encoded, forKey: "SavedPerson")
-//        }
-//
-//        
-//        
-//        
-//        UserDefaultsObj.set(UploadFileDetails, forKey: "UploadFileDetails")
-//    }
+    func setUploadFileDetails(UploadFileDetails:StructUploadFileDetails) {
+        let encoder = JSONEncoder()
+        if let encoded = try? encoder.encode(UploadFileDetails) {
+            UserDefaultsObj.set(encoded, forKey: "SavedPerson")
+        }
+    }
+    
+    
 //    func getUploadFileDetails() -> StructUploadFileDetails {
 //        return UserDefaultsObj
 //        

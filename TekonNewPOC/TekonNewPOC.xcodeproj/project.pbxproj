@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8F2B93C52B0F74E4004B594D /* UserDefaltClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */; };
+		8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93CD2B0FC25B004B594D /* Alamofire */; };
 		8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DEFF2B068F7500693365 /* AppDelegate.swift */; };
 		8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF012B068F7500693365 /* SceneDelegate.swift */; };
 		8F76DF042B068F7500693365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF032B068F7500693365 /* ViewController.swift */; };
@@ -25,7 +26,6 @@
 		8F76DF282B076FF700693365 /* StructureClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF272B076FF700693365 /* StructureClass.swift */; };
 		8F76DF2A2B07F39600693365 /* WebserviceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF292B07F39600693365 /* WebserviceClass.swift */; };
 		8F76DF2C2B089F6E00693365 /* EnumClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF2B2B089F6E00693365 /* EnumClass.swift */; };
-		8F76DF2F2B08AE0300693365 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F76DF2E2B08AE0300693365 /* Alamofire */; };
 		8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF302B08AE4E00693365 /* AlamofireWebserviceClass.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F76DF2F2B08AE0300693365 /* Alamofire in Frameworks */,
+				8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -157,7 +157,7 @@
 			);
 			name = TekonNewPOC;
 			packageProductDependencies = (
-				8F76DF2E2B08AE0300693365 /* Alamofire */,
+				8F2B93CD2B0FC25B004B594D /* Alamofire */,
 			);
 			productName = TekonNewPOC;
 			productReference = 8F76DEFC2B068F7500693365 /* TekonNewPOC.app */;
@@ -188,7 +188,7 @@
 			);
 			mainGroup = 8F76DEF32B068F7500693365;
 			packageReferences = (
-				8F76DF2D2B08AE0300693365 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 8F76DEFD2B068F7500693365 /* Products */;
 			projectDirPath = "";
@@ -462,7 +462,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8F76DF2D2B08AE0300693365 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -473,9 +473,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8F76DF2E2B08AE0300693365 /* Alamofire */ = {
+		8F2B93CD2B0FC25B004B594D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8F76DF2D2B08AE0300693365 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
