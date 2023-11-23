@@ -10,6 +10,7 @@ import UIKit
 class MediaViewController: BaseViewController {
 
     @IBOutlet weak var uploadPresentLabel: UILabel!
+    @IBOutlet weak var uploadStatusLabel: UILabel!
     @IBOutlet weak var uploadProgressBar: UIProgressView!
     
     //declar Globale vaibale for access in all over
@@ -17,6 +18,8 @@ class MediaViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        uploadStatusLabel.text = "Reddy to Upload"
         
         let fileName = "test.mp4"
         //Get file Info
@@ -48,6 +51,7 @@ class MediaViewController: BaseViewController {
     }
     
     @IBAction func uploadFileBtnPress(_ sender: Any) {
+        uploadStatusLabel.text = "Upload started"
         callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
     }
     
@@ -134,7 +138,7 @@ class MediaViewController: BaseViewController {
         let group = DispatchGroup()
         
         for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
-            print("j = ",j)
+            //print("j = ",j)
             group.enter()
                 
             APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
@@ -158,7 +162,7 @@ class MediaViewController: BaseViewController {
                         self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
                         
                     } else {
-                        print("URLs are not equal")
+                        //print("URLs are not equal")
                     }
                 }
                 
@@ -172,9 +176,11 @@ class MediaViewController: BaseViewController {
         }
         
         group.notify(queue: .main) {
+            
+            self.uploadStatusLabel.text = "all files Upload to server"
+            
             print("All uploads completed")
             self.callCompleteMultipartUpload(uploadFileDetails: self.g_UploadFileDetails)
-            
         }
     }
     

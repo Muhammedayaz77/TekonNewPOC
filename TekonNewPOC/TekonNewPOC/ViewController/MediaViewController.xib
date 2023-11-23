@@ -12,6 +12,7 @@
             <connections>
                 <outlet property="uploadPresentLabel" destination="zAY-eb-58z" id="Q1d-xA-cjg"/>
                 <outlet property="uploadProgressBar" destination="sFx-qT-yXW" id="b0f-yb-KLE"/>
+                <outlet property="uploadStatusLabel" destination="0WD-Ns-3yT" id="o8R-ZM-hHH"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -20,6 +21,15 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0WD-Ns-3yT">
+                    <rect key="frame" x="20" y="300" width="374" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="avt-bk-ofK"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="587-V8-lTs">
                     <rect key="frame" x="20" y="114" width="374" height="31"/>
                     <constraints>
@@ -69,10 +79,13 @@
                 <constraint firstItem="sFx-qT-yXW" firstAttribute="top" secondItem="zAY-eb-58z" secondAttribute="bottom" constant="10" id="Boi-b6-2vc"/>
                 <constraint firstItem="iGa-V4-2FO" firstAttribute="top" secondItem="sFx-qT-yXW" secondAttribute="bottom" constant="10" id="DPo-U4-gdt"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iGa-V4-2FO" secondAttribute="trailing" constant="20" id="Njg-uW-ejC"/>
+                <constraint firstItem="0WD-Ns-3yT" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="S4F-MP-3TN"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="sFx-qT-yXW" secondAttribute="trailing" constant="20" id="fjq-BU-vOe"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="587-V8-lTs" secondAttribute="trailing" constant="20" id="i9O-Ro-i85"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="0WD-Ns-3yT" secondAttribute="trailing" constant="20" id="k5L-St-Xf3"/>
                 <constraint firstItem="587-V8-lTs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lje-L4-RZC"/>
                 <constraint firstItem="zAY-eb-58z" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="np3-ia-wAo"/>
+                <constraint firstItem="0WD-Ns-3yT" firstAttribute="top" secondItem="iGa-V4-2FO" secondAttribute="bottom" constant="40" id="zCu-XX-Ygk"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </view>

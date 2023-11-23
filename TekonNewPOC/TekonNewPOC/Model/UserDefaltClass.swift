@@ -18,17 +18,20 @@ class UserDefaltClass: NSObject {
     func setUploadFileDetails(UploadFileDetails:StructUploadFileDetails) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(UploadFileDetails) {
-            UserDefaultsObj.set(encoded, forKey: "SavedPerson")
+            UserDefaultsObj.set(encoded, forKey: "UploadFileDetails")
         }
     }
     
     
-//    func getUploadFileDetails() -> StructUploadFileDetails {
-//        return UserDefaultsObj
-//        
-//        
-//        
-//        return UserDefaultsObj (forKey: "UploadFileDetails") as StructUploadFileDetails
-//    }
+    func getUploadFileDetails() -> StructUploadFileDetails? {
+       
+        if let savedPerson = UserDefaultsObj.object(forKey: "UploadFileDetails") as? Data {
+            let decoder = JSONDecoder()
+            if let loadedPerson = try? decoder.decode(StructUploadFileDetails.self, from: savedPerson) {
+                return loadedPerson
+            }
+        }
+        return nil
+    }
     
 }
