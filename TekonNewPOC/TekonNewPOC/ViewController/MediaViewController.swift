@@ -62,9 +62,17 @@ class MediaViewController: BaseViewController {
     
     
     func updateProgresBar (numberOfUploadedFile : Int) {
-        let progressValue : Float = Float(numberOfUploadedFile/g_UploadFileDetails.totalNumberOfChuncks!)
-        uploadPresentLabel.text = "\(progressValue*100)%"
-        uploadProgressBar.progress = progressValue
+        
+        
+        let progressValue = Float(numberOfUploadedFile) /  Float(g_UploadFileDetails.totalNumberOfChuncks!)
+        
+        uploadPresentLabel.text = String (progressValue*100)
+        //uploadProgressBar.progress = progressValue
+        
+        
+        uploadProgressBar.setProgress(progressValue, animated: true)
+
+        
     }
     
     
@@ -149,6 +157,8 @@ class MediaViewController: BaseViewController {
         let group = DispatchGroup()
         
         for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+            //print("j = ",j)
+            
             group.enter()
             
             APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
@@ -157,6 +167,13 @@ class MediaViewController: BaseViewController {
 //                    self.uploadCount = self.uploadCount+1
 //                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
 //                }
+                DispatchQueue.main.async {
+                                   
+                self.uploadStatusLabel.text = "files Uploading... to server"
+                self.uploadCount = self.uploadCount+1
+                self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
+                }
+                
                 
                 let responceURL = responceUploadedFile.ResponceURL
                 
@@ -186,6 +203,7 @@ class MediaViewController: BaseViewController {
 //                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
 //                }
             }
+            
         }
      
         group.notify(queue: .main) {
