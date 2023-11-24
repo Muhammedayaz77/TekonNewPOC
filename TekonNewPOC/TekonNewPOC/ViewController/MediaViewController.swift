@@ -13,6 +13,8 @@ class MediaViewController: BaseViewController {
     @IBOutlet weak var uploadStatusLabel: UILabel!
     @IBOutlet weak var uploadProgressBar: UIProgressView!
     
+    var uploadCount = 0
+    
     //declar Globale vaibale for access in all over
     var g_UploadFileDetails : StructUploadFileDetails = StructUploadFileDetails()
     
@@ -28,6 +30,9 @@ class MediaViewController: BaseViewController {
         splitVideoInto5MBChunks(fileInfo: fileInfoObj)
         //Fill Goble Varibale
         g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
+        
+        updateProgresBar(numberOfUploadedFile: 0)
+        
     }
     
     @IBAction func openGallaryBtnPress(_ sender: Any) {
@@ -55,6 +60,12 @@ class MediaViewController: BaseViewController {
         callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
     }
     
+    
+    func updateProgresBar (numberOfUploadedFile : Int) {
+        let progressValue : Float = Float(numberOfUploadedFile/g_UploadFileDetails.totalNumberOfChuncks!)
+        uploadPresentLabel.text = "\(progressValue*100)%"
+        uploadProgressBar.progress = progressValue
+    }
     
     
     func getFileDetails(fileName : String) ->  StructFileInfo {
@@ -138,11 +149,14 @@ class MediaViewController: BaseViewController {
         let group = DispatchGroup()
         
         for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
-            //print("j = ",j)
             group.enter()
-                
+            
             APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
-               
+                
+//                DispatchQueue.main.async {
+//                    self.uploadCount = self.uploadCount+1
+//                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
+//                }
                 
                 let responceURL = responceUploadedFile.ResponceURL
                 
@@ -167,14 +181,13 @@ class MediaViewController: BaseViewController {
                 }
                 
                 group.leave()
+//                group1.notify(queue: .main) {
+//                    self.uploadCount = self.uploadCount+1
+//                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
+//                }
             }
-            
-//        APIUpload(uploadFileDetails: uploadFileDetails, index: i)
-            
-//            self.callCompleteMultipartUpload(uploadFileDetails: uploadFileDetails, createMultipartUpload: createMultipartUpload)
-            
         }
-        
+     
         group.notify(queue: .main) {
             
             self.uploadStatusLabel.text = "all files Upload to server"
@@ -182,6 +195,8 @@ class MediaViewController: BaseViewController {
             print("All uploads completed")
             self.callCompleteMultipartUpload(uploadFileDetails: self.g_UploadFileDetails)
         }
+        
+       
     }
     
     func callCompleteMultipartUpload (uploadFileDetails: StructUploadFileDetails) {

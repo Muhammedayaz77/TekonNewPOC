@@ -24,14 +24,12 @@ class UserDefaltClass: NSObject {
     
     
     func getUploadFileDetails() -> StructUploadFileDetails? {
-       
-        if let savedPerson = UserDefaultsObj.object(forKey: "UploadFileDetails") as? Data {
+        if let UploadFileDetails = UserDefaultsObj.object(forKey: "UploadFileDetails") as? Data {
             let decoder = JSONDecoder()
-            if let loadedPerson = try? decoder.decode(StructUploadFileDetails.self, from: savedPerson) {
+            if let loadedPerson = try? decoder.decode(StructUploadFileDetails.self, from: UploadFileDetails) {
                 return loadedPerson
             }
         }
         return nil
     }
-    
 }
