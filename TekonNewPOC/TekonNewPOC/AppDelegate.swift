@@ -9,7 +9,12 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+//    let backgroundSessionIdentifier = "com.example.backgroundSession"
+//    let backgroundConfig = URLSessionConfiguration.background(withIdentifier: backgroundSessionIdentifier)
+//    let backgroundSessionManager = Alamofire.Session(configuration: backgroundConfig)
+//
+    
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -30,6 +35,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
+    
+//    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+//        if identifier == backgroundSessionIdentifier {
+//            // Re-create the background session manager and set its delegate
+//            backgroundSessionManager.delegate = MyDelegate()
+//            completionHandler()
+//        }
+//    }
+
+    
     
     
 //    BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.example.apple-samplecode.ColorFeed.refresh", using: nil) { task in
@@ -75,4 +90,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
+//
+//class MyDelegate: NSObject, URLSessionDelegate, URLSessionTaskDelegate {
+//    // Implement URLSessionDelegate and URLSessionTaskDelegate methods
+//}
+//
+//let delegate = MyDelegate()
+//backgroundSessionManager.delegate = delegate

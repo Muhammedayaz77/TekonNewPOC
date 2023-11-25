@@ -66,10 +66,10 @@ class MediaViewController: BaseViewController {
         
         let progressValue = Float(numberOfUploadedFile) /  Float(g_UploadFileDetails.totalNumberOfChuncks!)
         
-        uploadPresentLabel.text = String (progressValue*100)
+        uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
         //uploadProgressBar.progress = progressValue
         
-        
+    
         uploadProgressBar.setProgress(progressValue, animated: true)
 
         
@@ -113,6 +113,7 @@ class MediaViewController: BaseViewController {
     
     func callCreateMultipartUpload(uploadFileDetails: StructUploadFileDetails) {
         
+        //alamofire
         APICreateMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
             //set respoce in globle variable
             self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
@@ -120,65 +121,92 @@ class MediaViewController: BaseViewController {
             self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
     }
     
-//        APICreateMultipartUpload1(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
+        
+        //-------------------------------------
+        //webSerive
+//        APIHander().APICreateMultipartUpload(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
 //        //set respoce in globle variable
 //        self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
 //        //call Multi part per signed URL
-//            self.callGetMultipartPreSignedUrl(self.g_UploadFileDetails)
+//            self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
 //        }
     }
     
     func callGetMultipartPreSignedUrl(uploadFileDetails : StructUploadFileDetails) {
         
-        APIGetMultipartPreSignedUrlAlamofire(uploadFileDetails: uploadFileDetails) {
+//        //alamofire
+//        APIGetMultipartPreSignedUrlAlamofire(uploadFileDetails: uploadFileDetails) {
+//            (responceMultipartPreSignedUrl) in
+//
+//            self.g_UploadFileDetails.MultiPartPreSignedUrlArray = responceMultipartPreSignedUrl
+//            self.callUploadPUTAPI(uploadFileDetails: self.g_UploadFileDetails)
+//        }
+        
+        //-------------------------------------
+        //webSerive
+        APIHander().APIGetMultipartPreSignedUrl(uploadFileDetails: uploadFileDetails) {
             (responceMultipartPreSignedUrl) in
             
             self.g_UploadFileDetails.MultiPartPreSignedUrlArray = responceMultipartPreSignedUrl
-            
-            //check the responce in log
-//            for item1 in responceMultipartPreSignedUrl.parts {
-//                print(item1.partNumber)
-//                print(item1.signedUrl)
-//            }
-            
             self.callUploadPUTAPI(uploadFileDetails: self.g_UploadFileDetails)
-            
-            
         }
-        
-//        APIGetMultipartPreSignedUrl(uploadFileDetails: uploadFileDetails, createMultipartUpload: createMultipartUpload) {
-//            (responceMultipartPreSignedUrl) in
-//      }
     }
     
     func callUploadPUTAPI (uploadFileDetails: StructUploadFileDetails) {
         
-        
         let group = DispatchGroup()
+        //alamofire
+//        for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+//
+//            group.enter()
+//            APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
+//
+//                self.uploadStatusLabel.text = "files Uploading... to server"
+//                self.uploadCount = self.uploadCount+1
+//                self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
+//
+//                let responceURL = responceUploadedFile.ResponceURL
+//
+//                print("-------------------+++++++--------------------")
+//
+//                for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+//
+//                    let url1: StructPreSigned = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[i]
+//                    let preSignedUrl = url1.signedUrl
+//
+//                    if preSignedUrl == responceURL.absoluteString {
+//                        // Your code here
+//                        print("preSignedUrl ---",preSignedUrl)
+//                        print("URLs are equal",responceUploadedFile.Etag)
+//
+//                        self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
+//
+//                    } else {
+//                        //print("URLs are not equal")
+//                    }
+//                }
+//                group.leave()
+//            }
+//        }
         
+        
+        //-------------------------------------
+        //webSerive
         for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
-            //print("j = ",j)
             
             group.enter()
             
-            APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
+            APIHander().APIUpload (uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
                 
-//                DispatchQueue.main.async {
-//                    self.uploadCount = self.uploadCount+1
-//                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
-//                }
+                
                 DispatchQueue.main.async {
-                                   
                 self.uploadStatusLabel.text = "files Uploading... to server"
                 self.uploadCount = self.uploadCount+1
                 self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
                 }
-                
-                
                 let responceURL = responceUploadedFile.ResponceURL
                 
                 print("-------------------+++++++--------------------")
-                print("ResponceURL ---",responceURL.absoluteString)
                 
                 for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
                     
@@ -196,32 +224,32 @@ class MediaViewController: BaseViewController {
                         //print("URLs are not equal")
                     }
                 }
-                
                 group.leave()
-//                group1.notify(queue: .main) {
-//                    self.uploadCount = self.uploadCount+1
-//                    self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
-//                }
             }
-            
         }
+        
+        
      
         group.notify(queue: .main) {
-            
             self.uploadStatusLabel.text = "all files Upload to server"
-            
             print("All uploads completed")
             self.callCompleteMultipartUpload(uploadFileDetails: self.g_UploadFileDetails)
         }
-        
-       
     }
     
     func callCompleteMultipartUpload (uploadFileDetails: StructUploadFileDetails) {
         
-        APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
+//        //alamofire
+//        APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
+//            print(responceCompleteMultipartUpload)
+//        }
+        
+        
+        //-------------------------------------
+        //webSerive
+        APIHander().APICompleteMultipartUpload(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
             print(responceCompleteMultipartUpload)
-            
         }
+        
     }
 }

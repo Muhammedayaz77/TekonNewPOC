@@ -103,19 +103,16 @@ func APIUploadAlamofire (uploadFileDetails : StructUploadFileDetails, index : In
         .responseData { response in
             print(":::::::::: actul responce ",response)
             
-            
             var output = StructAPIResUploadedFile(Etag: "", ResponceURL: (response.request?.url)!)
             
             if let res = response.response {
                 if let url = response.request?.url {
                     print(":::::::::: allHeaderFields : \(res.allHeaderFields)")
-                   
                 }
                 
             for (key, value) in res.allHeaderFields {
                 if key as! String == "Etag" {
                     output.Etag = value as! String
-                    
                 }
             }
                 print(":::::::::: ")

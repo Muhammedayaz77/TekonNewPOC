@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8F2B93C52B0F74E4004B594D /* UserDefaltClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */; };
 		8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93CD2B0FC25B004B594D /* Alamofire */; };
+		8F2B93D02B11FC08004B594D /* APIHander.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93CF2B11FC08004B594D /* APIHander.swift */; };
 		8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DEFF2B068F7500693365 /* AppDelegate.swift */; };
 		8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF012B068F7500693365 /* SceneDelegate.swift */; };
 		8F76DF042B068F7500693365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF032B068F7500693365 /* ViewController.swift */; };
@@ -24,13 +25,13 @@
 		8F76DF242B07665D00693365 /* AttachmentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF232B07665D00693365 /* AttachmentHandler.swift */; };
 		8F76DF262B076F6200693365 /* MediaFileHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF252B076F6200693365 /* MediaFileHandler.swift */; };
 		8F76DF282B076FF700693365 /* StructureClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF272B076FF700693365 /* StructureClass.swift */; };
-		8F76DF2A2B07F39600693365 /* WebserviceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF292B07F39600693365 /* WebserviceClass.swift */; };
 		8F76DF2C2B089F6E00693365 /* EnumClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF2B2B089F6E00693365 /* EnumClass.swift */; };
 		8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF302B08AE4E00693365 /* AlamofireWebserviceClass.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaltClass.swift; sourceTree = "<group>"; };
+		8F2B93CF2B11FC08004B594D /* APIHander.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHander.swift; sourceTree = "<group>"; };
 		8F76DEFC2B068F7500693365 /* TekonNewPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TekonNewPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F76DEFF2B068F7500693365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F76DF012B068F7500693365 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,7 +49,6 @@
 		8F76DF232B07665D00693365 /* AttachmentHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentHandler.swift; sourceTree = "<group>"; };
 		8F76DF252B076F6200693365 /* MediaFileHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaFileHandler.swift; sourceTree = "<group>"; };
 		8F76DF272B076FF700693365 /* StructureClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructureClass.swift; sourceTree = "<group>"; };
-		8F76DF292B07F39600693365 /* WebserviceClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebserviceClass.swift; sourceTree = "<group>"; };
 		8F76DF2B2B089F6E00693365 /* EnumClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnumClass.swift; sourceTree = "<group>"; };
 		8F76DF302B08AE4E00693365 /* AlamofireWebserviceClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWebserviceClass.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,11 +119,11 @@
 		8F76DF172B07624300693365 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */,
 				8F76DF232B07665D00693365 /* AttachmentHandler.swift */,
 				8F76DF252B076F6200693365 /* MediaFileHandler.swift */,
-				8F76DF292B07F39600693365 /* WebserviceClass.swift */,
+				8F2B93CF2B11FC08004B594D /* APIHander.swift */,
 				8F76DF302B08AE4E00693365 /* AlamofireWebserviceClass.swift */,
-				8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -220,10 +220,10 @@
 			files = (
 				8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */,
 				8F76DF1E2B07624D00693365 /* ExtentionClass.swift in Sources */,
-				8F76DF2A2B07F39600693365 /* WebserviceClass.swift in Sources */,
 				8F76DF1D2B07624D00693365 /* HelperClass.swift in Sources */,
 				8F76DF042B068F7500693365 /* ViewController.swift in Sources */,
 				8F76DF212B07629B00693365 /* MediaViewController.swift in Sources */,
+				8F2B93D02B11FC08004B594D /* APIHander.swift in Sources */,
 				8F2B93C52B0F74E4004B594D /* UserDefaltClass.swift in Sources */,
 				8F76DF2C2B089F6E00693365 /* EnumClass.swift in Sources */,
 				8F76DF282B076FF700693365 /* StructureClass.swift in Sources */,
