@@ -98,6 +98,12 @@ func APIUploadAlamofire (uploadFileDetails : StructUploadFileDetails, index : In
     let localURL = uploadFileDetails.chunkFileURLArray[index].appendingPathComponent(uploadFileDetails.fileInfo!.fileName)
     let parameters = localURL.path
     let postData = parameters.data(using: .utf8)
+    let eTag: String = uploadFileDetails.ETagArray[index]
+    if eTag != "" {
+        print("not empty");
+        return
+    }
+    
     
     AF.upload(postData!, to: preSignedUrl.signedUrl, method: .put, headers: headers)
         .responseData { response in

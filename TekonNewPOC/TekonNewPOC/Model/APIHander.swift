@@ -14,7 +14,11 @@ import UIKit
 let baseURL : String = "http://13.57.38.104:8080/uploads/"
 
 
-class APIHander: NSObject, URLSessionTaskDelegate {
+class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
+    
+    let backgroundConfig = URLSessionConfiguration.background(withIdentifier: "com.TekonNewPOC.backgroundSessionIdentifier")
+    
+    
     
     func APICreateMultipartUpload (uploadFileDetails : StructUploadFileDetails, completionBlock: @escaping (StructAPIResCreateMultipartUpload) -> Void) {
         
@@ -196,6 +200,12 @@ class APIHander: NSObject, URLSessionTaskDelegate {
         
         let preSignedUrl : StructPreSigned  = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[index]
         let localURL = uploadFileDetails.chunkFileURLArray[index].appendingPathComponent(uploadFileDetails.fileInfo!.fileName)
+        let eTag: String = uploadFileDetails.ETagArray[index]
+        if eTag != "" {
+            print("not empty");
+            return
+        }
+        
         let parameters = localURL.path
         let postData = parameters.data(using: .utf8)
         
@@ -205,8 +215,20 @@ class APIHander: NSObject, URLSessionTaskDelegate {
 
         request.httpMethod = "PUT"
         request.httpBody = postData
-
-        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+        
+//        let session = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
+        //let task = session.uploadTask(with: request, from:postData!)
+//        let task = session.uploadTask(with: request, fromFile: localURL)
+//
+//        session.uploadTask(with: request, fromFile: localURL) { data, response, error in
+//
+        
+//        let task = URLSession.shared.uploadTask(with: request, from: postData) { data, response, error in
+            
+        let task = URLSession.shared.uploadTask(with: request, fromFile: localURL) { data, response, error in
+          
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            
           guard let data = data else {
             print(String(describing: error))
             return
@@ -235,9 +257,6 @@ class APIHander: NSObject, URLSessionTaskDelegate {
         task.resume()
         
     }
-
-
-    
-    
-    
 }
+
+

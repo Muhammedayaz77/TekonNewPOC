@@ -156,7 +156,8 @@ class MediaViewController: BaseViewController {
         
         let group = DispatchGroup()
         //alamofire
-//        for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+        for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+            
 //
 //            group.enter()
 //            APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
@@ -192,7 +193,6 @@ class MediaViewController: BaseViewController {
         
         //-------------------------------------
         //webSerive
-        for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
             
             group.enter()
             
