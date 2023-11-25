@@ -114,22 +114,22 @@ class MediaViewController: BaseViewController {
     func callCreateMultipartUpload(uploadFileDetails: StructUploadFileDetails) {
         
         //alamofire
-        APICreateMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
-            //set respoce in globle variable
-            self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
-            //call Multi part per signed URL
-            self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
-    }
+//        APICreateMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
+//            //set respoce in globle variable
+//            self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
+//            //call Multi part per signed URL
+//            self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
+//    }
     
         
         //-------------------------------------
         //webSerive
-//        APIHander().APICreateMultipartUpload(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
-//        //set respoce in globle variable
-//        self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
-//        //call Multi part per signed URL
-//            self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
-//        }
+        APIHander().APICreateMultipartUpload(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
+        //set respoce in globle variable
+        self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
+        //call Multi part per signed URL
+            self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
+        }
     }
     
     func callGetMultipartPreSignedUrl(uploadFileDetails : StructUploadFileDetails) {
