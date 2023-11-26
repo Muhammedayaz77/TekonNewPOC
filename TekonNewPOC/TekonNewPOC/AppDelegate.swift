@@ -48,8 +48,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //uploadFilesInBackground()
 
         // End the background task when the upload is complete
-        UIApplication.shared.endBackgroundTask(backgroundTask)
+        //UIApplication.shared.endBackgroundTask(backgroundTask)
     }
+    
+    
+    
     
     
 }

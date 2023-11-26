@@ -13,7 +13,6 @@ class MediaViewController: BaseViewController {
     @IBOutlet weak var uploadStatusLabel: UILabel!
     @IBOutlet weak var uploadProgressBar: UIProgressView!
     
-    var uploadCount = 0
     
     //declar Globale vaibale for access in all over
     var g_UploadFileDetails : StructUploadFileDetails = StructUploadFileDetails()
@@ -33,7 +32,24 @@ class MediaViewController: BaseViewController {
         
         updateProgresBar(numberOfUploadedFile: 0)
         
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        
     }
+    
+    
+    @objc func appMovedToBackground() {
+       print("app enters background")
+        UserDefaltClass().setUploadFileDetails(UploadFileDetails: g_UploadFileDetails)
+   }
+
+   @objc func appCameToForeground() {
+       print("app enters foreground")
+       var UploadFileDetails = UserDefaltClass().getUploadFileDetails()
+   }
     
     @IBAction func openGallaryBtnPress(_ sender: Any) {
         AttachmentHandler.shared.showAttachmentActionSheet(vc: self)
@@ -62,17 +78,12 @@ class MediaViewController: BaseViewController {
     
     
     func updateProgresBar (numberOfUploadedFile : Int) {
-        
-        
-        let progressValue = Float(numberOfUploadedFile) /  Float(g_UploadFileDetails.totalNumberOfChuncks!)
-        
-        uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
-        //uploadProgressBar.progress = progressValue
-        
-    
-        uploadProgressBar.setProgress(progressValue, animated: true)
-
-        
+       
+        runOnMainQueue {
+            let progressValue = Float(numberOfUploadedFile) /  Float(self.g_UploadFileDetails.totalNumberOfChuncks!)
+            self.uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
+            self.uploadProgressBar.setProgress(progressValue, animated: true)
+        }
     }
     
     
@@ -154,39 +165,20 @@ class MediaViewController: BaseViewController {
     
     func callUploadPUTAPI (uploadFileDetails: StructUploadFileDetails) {
         
+        print("end callUploadPUTAPI")
         let group = DispatchGroup()
+        var uploadCount = 0
+        updateProgresBar(numberOfUploadedFile: uploadCount)
+        
         //alamofire
+        
         for j in 0...uploadFileDetails.chunkFileURLArray.count-1 {
             
 //
 //            group.enter()
 //            APIUploadAlamofire(uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
 //
-//                self.uploadStatusLabel.text = "files Uploading... to server"
-//                self.uploadCount = self.uploadCount+1
-//                self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
-//
-//                let responceURL = responceUploadedFile.ResponceURL
-//
-//                print("-------------------+++++++--------------------")
-//
-//                for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
-//
-//                    let url1: StructPreSigned = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[i]
-//                    let preSignedUrl = url1.signedUrl
-//
-//                    if preSignedUrl == responceURL.absoluteString {
-//                        // Your code here
-//                        print("preSignedUrl ---",preSignedUrl)
-//                        print("URLs are equal",responceUploadedFile.Etag)
-//
-//                        self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
-//
-//                    } else {
-//                        //print("URLs are not equal")
-//                    }
-//                }
-//                group.leave()
+//            self.UploadPUTAPIResponceHandler(responceUploadedFile: responceUploadedFile, uploadCount: &uploadCount, group: group, uploadFileDetails: uploadFileDetails)
 //            }
 //        }
         
@@ -196,40 +188,15 @@ class MediaViewController: BaseViewController {
             
             group.enter()
             
+            print(" callUploadPUTAPI  for loop")
             APIHander().APIUpload (uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
-                
-                
-                DispatchQueue.main.async {
-                self.uploadStatusLabel.text = "files Uploading... to server"
-                self.uploadCount = self.uploadCount+1
-                self.updateProgresBar(numberOfUploadedFile: self.uploadCount)
+                runOnMainQueue {
+                    self.uploadStatusLabel.text = "files Uploading... to server"
                 }
-                let responceURL = responceUploadedFile.ResponceURL
-                
-                print("-------------------+++++++--------------------")
-                
-                for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
-                    
-                    let url1: StructPreSigned = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[i]
-                    let preSignedUrl = url1.signedUrl
-                    
-                    if preSignedUrl == responceURL.absoluteString {
-                        // Your code here
-                        print("preSignedUrl ---",preSignedUrl)
-                        print("URLs are equal",responceUploadedFile.Etag)
-                        
-                        self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
-                        
-                    } else {
-                        //print("URLs are not equal")
-                    }
-                }
-                group.leave()
+                self.UploadPUTAPIResponceHandler(responceUploadedFile: responceUploadedFile, uploadCount: &uploadCount, group: group, uploadFileDetails: uploadFileDetails)
             }
         }
         
-        
-     
         group.notify(queue: .main) {
             self.uploadStatusLabel.text = "all files Upload to server"
             print("All uploads completed")
@@ -239,17 +206,53 @@ class MediaViewController: BaseViewController {
     
     func callCompleteMultipartUpload (uploadFileDetails: StructUploadFileDetails) {
         
+        print(" callCompleteMultipartUpload")
 //        //alamofire
 //        APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
 //            print(responceCompleteMultipartUpload)
 //        }
-        
         
         //-------------------------------------
         //webSerive
         APIHander().APICompleteMultipartUpload(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
             print(responceCompleteMultipartUpload)
         }
+        print("end callCompleteMultipartUpload")
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    func UploadPUTAPIResponceHandler (responceUploadedFile: StructAPIResUploadedFile, uploadCount : inout Int ,group : DispatchGroup , uploadFileDetails: StructUploadFileDetails) {
+    
         
+        uploadCount = uploadCount+1
+        self.updateProgresBar(numberOfUploadedFile: uploadCount)
+        
+        let responceURL = responceUploadedFile.ResponceURL
+        print("-------------------+++++++--------------------")
+        
+        for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
+            
+            let url1: StructPreSigned = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[i]
+            let preSignedUrl = url1.signedUrl
+            
+            if preSignedUrl == responceURL.absoluteString {
+                // Your code here
+                print("preSignedUrl ---",preSignedUrl)
+                print("URLs are equal",responceUploadedFile.Etag)
+                
+                self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
+                
+            } else {
+                //print("URLs are not equal")
+            }
+        }
+        group.leave()
     }
 }

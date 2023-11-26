@@ -9,6 +9,11 @@ import Foundation
 import AVFoundation
 
 
+func runOnMainQueue(_ block: @escaping () -> Void) {
+    DispatchQueue.main.async {
+        block()
+    }
+}
 
 
 

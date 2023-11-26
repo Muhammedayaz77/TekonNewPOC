@@ -201,61 +201,93 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
         let preSignedUrl : StructPreSigned  = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[index]
         let localURL = uploadFileDetails.chunkFileURLArray[index].appendingPathComponent(uploadFileDetails.fileInfo!.fileName)
         let eTag: String = uploadFileDetails.ETagArray[index]
-        if eTag != "" {
-            print("not empty");
-            return
-        }
         
         let parameters = localURL.path
         let postData = parameters.data(using: .utf8)
         
-        
         var request = URLRequest(url: URL(string: preSignedUrl.signedUrl)!,timeoutInterval: Double.infinity)
-        //request.addValue("text/plain", forHTTPHeaderField: "Content-Type")
-
+        
+        if eTag != "" {
+            print("not empty");
+            
+            let output = StructAPIResUploadedFile(Etag: eTag, ResponceURL: request.url!)
+            completionBlock(output)
+            return
+        }
+        
         request.httpMethod = "PUT"
         request.httpBody = postData
         
-//        let session = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
-        //let task = session.uploadTask(with: request, from:postData!)
-//        let task = session.uploadTask(with: request, fromFile: localURL)
-//
-//        session.uploadTask(with: request, fromFile: localURL) { data, response, error in
-//
         
-//        let task = URLSession.shared.uploadTask(with: request, from: postData) { data, response, error in
-            
-        let task = URLSession.shared.uploadTask(with: request, fromFile: localURL) { data, response, error in
-          
-//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
-            
-          guard let data = data else {
-            print(String(describing: error))
-            return
-          }
+        let appState = AppStateManager.shared.appState
 
-            var output = StructAPIResUploadedFile(Etag: "", ResponceURL: (request.url)!)
+        if appState == .foreground {
+            // Handle foreground state
             
-            if let res = response as? HTTPURLResponse {
-                if let url = request.url {
-                    print(":::::::::: allHeaderFields : \(res.allHeaderFields)")
-                }
+            let task = URLSession.shared.uploadTask(with: request, fromFile: localURL) { data, response, error in
+              
+              guard let data = data else {
+                print(String(describing: error))
+                return
+              }
+
+                var output = StructAPIResUploadedFile(Etag: "", ResponceURL: (request.url)!)
                 
-            for (key, value) in res.allHeaderFields {
-                if key as! String == "Etag" {
-                    output.Etag = value as! String
+                if let res = response as? HTTPURLResponse {
+                    if let url = request.url {
+                        print(":::::::::: allHeaderFields : \(res.allHeaderFields)")
+                    }
+                    
+                for (key, value) in res.allHeaderFields {
+                    if key as! String == "Etag" {
+                        output.Etag = value as! String
+                    }
                 }
+              
             }
-          
+                print(":::::::::: ")
+            completionBlock(output)
+            
+            
+          print(String(data: data, encoding: .utf8)!)
+            }
+            task.resume()
+        } else {
+            // Handle background state
+            
+            
+            let session = URLSession(configuration: backgroundConfig, delegate: self, delegateQueue: nil)
+            
+            let task = session.uploadTask(with: request, fromFile: localURL) { data, response, error in
+
+              
+              guard let data = data else {
+                print(String(describing: error))
+                return
+              }
+
+                var output = StructAPIResUploadedFile(Etag: "", ResponceURL: (request.url)!)
+                
+                if let res = response as? HTTPURLResponse {
+                    if let url = request.url {
+                        print(":::::::::: allHeaderFields : \(res.allHeaderFields)")
+                    }
+                    
+                for (key, value) in res.allHeaderFields {
+                    if key as! String == "Etag" {
+                        output.Etag = value as! String
+                    }
+                }
+              
+            }
+                print(":::::::::: ")
+            completionBlock(output)
+            
+            
+          print(String(data: data, encoding: .utf8)!)
+            }
+            task.resume()
         }
-            print(":::::::::: ")
-        completionBlock(output)
-        
-        
-      print(String(data: data, encoding: .utf8)!)
-        }
-        task.resume()
-        
     }
 }
 
