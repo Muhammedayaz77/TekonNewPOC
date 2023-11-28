@@ -11,6 +11,8 @@
 		8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93CD2B0FC25B004B594D /* Alamofire */; };
 		8F2B93D02B11FC08004B594D /* APIHander.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93CF2B11FC08004B594D /* APIHander.swift */; };
 		8F2B93D22B137417004B594D /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93D12B137417004B594D /* AppStateManager.swift */; };
+		8F2B93D42B14AB95004B594D /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93D32B14AB95004B594D /* AlertManager.swift */; };
+		8F2B93D62B15CEA8004B594D /* test1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93D52B15CEA7004B594D /* test1.mp4 */; };
 		8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DEFF2B068F7500693365 /* AppDelegate.swift */; };
 		8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF012B068F7500693365 /* SceneDelegate.swift */; };
 		8F76DF042B068F7500693365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF032B068F7500693365 /* ViewController.swift */; };
@@ -34,6 +36,8 @@
 		8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaltClass.swift; sourceTree = "<group>"; };
 		8F2B93CF2B11FC08004B594D /* APIHander.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIHander.swift; sourceTree = "<group>"; };
 		8F2B93D12B137417004B594D /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
+		8F2B93D32B14AB95004B594D /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
+		8F2B93D52B15CEA7004B594D /* test1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.mp4; sourceTree = "<group>"; };
 		8F76DEFC2B068F7500693365 /* TekonNewPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TekonNewPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F76DEFF2B068F7500693365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F76DF012B068F7500693365 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -97,6 +101,7 @@
 				8F76DF082B068F7700693365 /* Assets.xcassets */,
 				8F76DF0A2B068F7700693365 /* LaunchScreen.storyboard */,
 				8F76DF0D2B068F7700693365 /* Info.plist */,
+				8F2B93D52B15CEA7004B594D /* test1.mp4 */,
 			);
 			path = TekonNewPOC;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			children = (
 				8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */,
 				8F2B93D12B137417004B594D /* AppStateManager.swift */,
+				8F2B93D32B14AB95004B594D /* AlertManager.swift */,
 				8F76DF232B07665D00693365 /* AttachmentHandler.swift */,
 				8F76DF252B076F6200693365 /* MediaFileHandler.swift */,
 				8F2B93CF2B11FC08004B594D /* APIHander.swift */,
@@ -208,6 +214,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F76DF0C2B068F7700693365 /* LaunchScreen.storyboard in Resources */,
+				8F2B93D62B15CEA8004B594D /* test1.mp4 in Resources */,
 				8F76DF092B068F7700693365 /* Assets.xcassets in Resources */,
 				8F76DF072B068F7500693365 /* Main.storyboard in Resources */,
 				8F76DF222B07629B00693365 /* MediaViewController.xib in Resources */,
@@ -222,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */,
+				8F2B93D42B14AB95004B594D /* AlertManager.swift in Sources */,
 				8F76DF1E2B07624D00693365 /* ExtentionClass.swift in Sources */,
 				8F76DF1D2B07624D00693365 /* HelperClass.swift in Sources */,
 				8F76DF042B068F7500693365 /* ViewController.swift in Sources */,
@@ -383,9 +391,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CLML22LHF7;
+				DEVELOPMENT_TEAM = J399Y4NJ6K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TekonNewPOC/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Use Media";
@@ -402,11 +411,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Hind.Tech.Group.TekonNewPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = hind.tech.group.tekonnewspoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Video File Upload POC dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -415,9 +425,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = CLML22LHF7;
+				DEVELOPMENT_TEAM = J399Y4NJ6K;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TekonNewPOC/Info.plist;
 				INFOPLIST_KEY_NSAppleMusicUsageDescription = "Use Media";
@@ -434,11 +445,12 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = Hind.Tech.Group.TekonNewPOC;
+				PRODUCT_BUNDLE_IDENTIFIER = hind.tech.group.tekonnewspoc;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "Video File Upload POC dev";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

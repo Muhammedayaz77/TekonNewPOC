@@ -16,27 +16,58 @@ class MediaViewController: BaseViewController {
     
     //declar Globale vaibale for access in all over
     var g_UploadFileDetails : StructUploadFileDetails = StructUploadFileDetails()
+    //var g_UploadFileDetails = [StructUploadFileDetails]()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         uploadStatusLabel.text = "Reddy to Upload"
+        let fileName = "test1.mp4"
+        let fileBundelURL = getFilePathFromBundel(fileName: fileName)!
+        do {
+            
+            let data = try Data(contentsOf: URL(fileURLWithPath: fileBundelURL))
+            
+            saveFileInDocument(fileData: data, fileName: fileName)
+    } catch {
+        print("Error: \(error)")
+    }
         
-        let fileName = "test.mp4"
+        
+        
+        updateProgresBar(numberOfUploadedFile: 0)
+        setBasicObj(fileName: fileName)
+        
+        appCameToForeground()
+        if fileName != g_UploadFileDetails.fileInfo?.fileName {
+            
+            //Get file Info
+            let fileInfoObj : StructFileInfo = getFileDetails(fileName: fileName)
+            //Split Video In chunks
+            splitVideoInto5MBChunks(fileInfo: fileInfoObj)
+            //Fill Goble Varibale
+            g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
+            
+            updateProgresBar(numberOfUploadedFile: 0)
+        }
+   
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+        
+        
+    }
+    
+    func setBasicObj(fileName : String) {
         //Get file Info
         let fileInfoObj : StructFileInfo = getFileDetails(fileName: fileName)
         //Split Video In chunks
         splitVideoInto5MBChunks(fileInfo: fileInfoObj)
         //Fill Goble Varibale
         g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
-        
-        updateProgresBar(numberOfUploadedFile: 0)
-        
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
-        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-        
         
     }
     
@@ -48,7 +79,10 @@ class MediaViewController: BaseViewController {
 
    @objc func appCameToForeground() {
        print("app enters foreground")
-       var UploadFileDetails = UserDefaltClass().getUploadFileDetails()
+       let UploadFileDetails = UserDefaltClass().getUploadFileDetails()
+       if(UploadFileDetails != nil ) {
+           g_UploadFileDetails = UploadFileDetails!
+       }
    }
     
     @IBAction func openGallaryBtnPress(_ sender: Any) {
@@ -59,14 +93,20 @@ class MediaViewController: BaseViewController {
         }
         AttachmentHandler.shared.videoPickedBlock = { (videourl) in
             print("videoURL here i am")
+            var fileNameWithoutExt = "test.mp4"
             do {
+               // fileNameStr = getFileNameFromURL(fileURL: videourl)
+                fileNameWithoutExt = getFileNameWithoutExtension(fileURL: videourl)
+                
+                fileNameWithoutExt =   fileNameWithoutExt.appending(".mp4")
                 let data = try Data(contentsOf: videourl)
-                let outputFileName = "test.mp4"
-                let outputURL = getDocumentDirectoriesPathURL().appendingPathComponent(outputFileName)
-                try data.write(to: outputURL)
+                saveFileInDocument(fileData: data, fileName: fileNameWithoutExt)
+                
+                
             } catch {
                 print("Error: \(error)")
             }
+            self.setBasicObj(fileName: fileNameWithoutExt)
         }
         print("DocumentDirectoriesPath", getDocumentDirectoriesPath())
     }

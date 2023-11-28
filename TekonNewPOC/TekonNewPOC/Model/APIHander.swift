@@ -50,6 +50,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             print(String(describing: error))
             return
         }
+            
         print(String(data: data, encoding: .utf8)!)
             
             do {
@@ -148,9 +149,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
         }
         
         let params: [String: Any] = ["fileKey":fileKey, "UploadId": uploadId, "parts":partArray]
-        
         var parameters: String = ""
-        
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: params, options: [])
             if let jsonString = String(data: jsonData, encoding: .utf8) {
@@ -161,11 +160,8 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             print("Error converting dictionary to JSON: \(error)")
         }
         
-        
         let postData = parameters.data(using: .utf8)
-        
         let apiStr = baseURL.appending("completeMultipartUpload")
-        
         var request = URLRequest(url: URL(string: apiStr)!,timeoutInterval: Double.infinity)
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
 
@@ -173,26 +169,19 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
         request.httpBody = postData
 
         let task = URLSession.shared.dataTask(with: request) { data, response, error in
-          guard let data = data else {
+        guard let data = data else {
             print(String(describing: error))
             return
-          }
-            if let res = response as? HTTPURLResponse {
-                print("APICompleteMultipartUpload allHeaderFields: ", res.allHeaderFields)
-            }
-             
-            
-            
-            completionBlock(data)
-          print(String(data: data, encoding: .utf8)!)
         }
-
-        task.resume()
-
-        
+        if let res = response as? HTTPURLResponse {
+            print("APICompleteMultipartUpload allHeaderFields: ", res.allHeaderFields)
+        }
+        completionBlock(data)
+        print(String(data: data, encoding: .utf8)!)
     }
 
-
+    task.resume()
+}
 
 
 

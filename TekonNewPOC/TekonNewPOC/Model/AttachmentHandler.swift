@@ -65,22 +65,22 @@ class AttachmentHandler: NSObject{
         currentVC = vc
         let actionSheet = UIAlertController(title: Constants.actionFileTypeHeading, message: Constants.actionFileTypeDescription, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: Constants.camera, style: .default, handler: { (action) -> Void in
-            self.authorisationStatus(attachmentTypeEnum: .camera, vc: self.currentVC!)
-        }))
+//        actionSheet.addAction(UIAlertAction(title: Constants.camera, style: .default, handler: { (action) -> Void in
+//            self.authorisationStatus(attachmentTypeEnum: .camera, vc: self.currentVC!)
+//        }))
         
-        actionSheet.addAction(UIAlertAction(title: Constants.phoneLibrary, style: .default, handler: { (action) -> Void in
-            self.authorisationStatus(attachmentTypeEnum: .photoLibrary, vc: self.currentVC!)
-        }))
+//        actionSheet.addAction(UIAlertAction(title: Constants.phoneLibrary, style: .default, handler: { (action) -> Void in
+//            self.authorisationStatus(attachmentTypeEnum: .photoLibrary, vc: self.currentVC!)
+//        }))
         
         actionSheet.addAction(UIAlertAction(title: Constants.video, style: .default, handler: { (action) -> Void in
             self.authorisationStatus(attachmentTypeEnum: .video, vc: self.currentVC!)
             
         }))
         
-        actionSheet.addAction(UIAlertAction(title: Constants.file, style: .default, handler: { (action) -> Void in
-            self.documentPicker()
-        }))
+//        actionSheet.addAction(UIAlertAction(title: Constants.file, style: .default, handler: { (action) -> Void in
+//            self.documentPicker()
+//        }))
         
         actionSheet.addAction(UIAlertAction(title: Constants.cancelBtnTitle, style: .cancel, handler: nil))
         
@@ -166,6 +166,7 @@ class AttachmentHandler: NSObject{
             let myPickerController = UIImagePickerController()
             myPickerController.delegate = self
             myPickerController.sourceType = .photoLibrary
+            myPickerController.videoExportPreset = AVAssetExportPresetPassthrough
             myPickerController.mediaTypes = [kUTTypeMovie as String, kUTTypeVideo as String]
             currentVC?.present(myPickerController, animated: true, completion: nil)
         }
@@ -224,9 +225,13 @@ extension AttachmentHandler: UIImagePickerControllerDelegate, UINavigationContro
         if let videoUrl = info[UIImagePickerController.InfoKey.mediaURL.rawValue] as? NSURL{
             print("videourl: ", videoUrl)
             //trying compression of video
-            let data = NSData(contentsOf: videoUrl as URL)!
-            print("File size before compression: \(Double(data.length / 1048576)) mb")
-            compressWithSessionStatusFunc(videoUrl)
+//            let data = NSData(contentsOf: videoUrl as URL)!
+//            print("File size before compression: \(Double(data.length / 1048576)) mb")
+            
+            DispatchQueue.main.async {
+                self.videoPickedBlock?(videoUrl as URL)
+            }
+            //compressWithSessionStatusFunc(videoUrl)
         }
         else{
             print("Something went wrong in  video")
@@ -236,7 +241,7 @@ extension AttachmentHandler: UIImagePickerControllerDelegate, UINavigationContro
     
     //MARK: Video Compressing technique
     fileprivate func compressWithSessionStatusFunc(_ videoUrl: NSURL) {
-        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".MOV")
+        let compressedURL = NSURL.fileURL(withPath: NSTemporaryDirectory() + NSUUID().uuidString + ".mp4")
         compressVideo(inputURL: videoUrl as URL, outputURL: compressedURL) { (exportSession) in
             guard let session = exportSession else {
                 return
@@ -277,7 +282,7 @@ extension AttachmentHandler: UIImagePickerControllerDelegate, UINavigationContro
         }
         
         exportSession.outputURL = outputURL
-        exportSession.outputFileType = AVFileType.mov
+        exportSession.outputFileType = AVFileType.mp4
         exportSession.shouldOptimizeForNetworkUse = true
         exportSession.exportAsynchronously { () -> Void in
             handler(exportSession)
