@@ -8,11 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		8F2B93C52B0F74E4004B594D /* UserDefaltClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */; };
-		8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93CD2B0FC25B004B594D /* Alamofire */; };
 		8F2B93D02B11FC08004B594D /* APIHander.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93CF2B11FC08004B594D /* APIHander.swift */; };
 		8F2B93D22B137417004B594D /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93D12B137417004B594D /* AppStateManager.swift */; };
 		8F2B93D42B14AB95004B594D /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93D32B14AB95004B594D /* AlertManager.swift */; };
 		8F2B93D62B15CEA8004B594D /* test1.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93D52B15CEA7004B594D /* test1.mp4 */; };
+		8F2B93D92B17155B004B594D /* aTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93D72B17155A004B594D /* aTableViewCell.swift */; };
+		8F2B93DA2B17155B004B594D /* aTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93D82B17155A004B594D /* aTableViewCell.xib */; };
+		8F2B93DD2B171B03004B594D /* MediaListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93DB2B171B03004B594D /* MediaListViewController.swift */; };
+		8F2B93DE2B171B03004B594D /* MediaListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93DC2B171B03004B594D /* MediaListViewController.xib */; };
+		8F2B93E12B171B88004B594D /* MediaListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93DF2B171B88004B594D /* MediaListTableViewCell.swift */; };
+		8F2B93E22B171B88004B594D /* MediaListTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93E02B171B88004B594D /* MediaListTableViewCell.xib */; };
+		8F2B93E72B1747CE004B594D /* MediaDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93E52B1747CE004B594D /* MediaDetailsViewController.swift */; };
+		8F2B93E82B1747CE004B594D /* MediaDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */; };
+		8F2B93EF2B1876DC004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93EE2B1876DC004B594D /* Alamofire */; };
 		8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DEFF2B068F7500693365 /* AppDelegate.swift */; };
 		8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF012B068F7500693365 /* SceneDelegate.swift */; };
 		8F76DF042B068F7500693365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF032B068F7500693365 /* ViewController.swift */; };
@@ -38,6 +46,14 @@
 		8F2B93D12B137417004B594D /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
 		8F2B93D32B14AB95004B594D /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		8F2B93D52B15CEA7004B594D /* test1.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = test1.mp4; sourceTree = "<group>"; };
+		8F2B93D72B17155A004B594D /* aTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = aTableViewCell.swift; sourceTree = "<group>"; };
+		8F2B93D82B17155A004B594D /* aTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = aTableViewCell.xib; sourceTree = "<group>"; };
+		8F2B93DB2B171B03004B594D /* MediaListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListViewController.swift; sourceTree = "<group>"; };
+		8F2B93DC2B171B03004B594D /* MediaListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaListViewController.xib; sourceTree = "<group>"; };
+		8F2B93DF2B171B88004B594D /* MediaListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaListTableViewCell.swift; sourceTree = "<group>"; };
+		8F2B93E02B171B88004B594D /* MediaListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaListTableViewCell.xib; sourceTree = "<group>"; };
+		8F2B93E52B1747CE004B594D /* MediaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsViewController.swift; sourceTree = "<group>"; };
+		8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDetailsViewController.xib; sourceTree = "<group>"; };
 		8F76DEFC2B068F7500693365 /* TekonNewPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TekonNewPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F76DEFF2B068F7500693365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F76DF012B068F7500693365 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,13 +80,33 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F2B93CE2B0FC25B004B594D /* Alamofire in Frameworks */,
+				8F2B93EF2B1876DC004B594D /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8F2B93E32B171EC1004B594D /* ListMedia */ = {
+			isa = PBXGroup;
+			children = (
+				8F2B93DB2B171B03004B594D /* MediaListViewController.swift */,
+				8F2B93DC2B171B03004B594D /* MediaListViewController.xib */,
+				8F2B93DF2B171B88004B594D /* MediaListTableViewCell.swift */,
+				8F2B93E02B171B88004B594D /* MediaListTableViewCell.xib */,
+			);
+			path = ListMedia;
+			sourceTree = "<group>";
+		};
+		8F2B93E42B17478E004B594D /* MediaDetails */ = {
+			isa = PBXGroup;
+			children = (
+				8F2B93E52B1747CE004B594D /* MediaDetailsViewController.swift */,
+				8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */,
+			);
+			path = MediaDetails;
+			sourceTree = "<group>";
+		};
 		8F76DEF32B068F7500693365 = {
 			isa = PBXGroup;
 			children = (
@@ -117,8 +153,12 @@
 		8F76DF162B07623800693365 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				8F2B93E32B171EC1004B594D /* ListMedia */,
+				8F2B93E42B17478E004B594D /* MediaDetails */,
 				8F76DF1F2B07629B00693365 /* MediaViewController.swift */,
 				8F76DF202B07629B00693365 /* MediaViewController.xib */,
+				8F2B93D72B17155A004B594D /* aTableViewCell.swift */,
+				8F2B93D82B17155A004B594D /* aTableViewCell.xib */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -163,10 +203,11 @@
 			buildRules = (
 			);
 			dependencies = (
+				8F2B93F12B1876E8004B594D /* PBXTargetDependency */,
 			);
 			name = TekonNewPOC;
 			packageProductDependencies = (
-				8F2B93CD2B0FC25B004B594D /* Alamofire */,
+				8F2B93EE2B1876DC004B594D /* Alamofire */,
 			);
 			productName = TekonNewPOC;
 			productReference = 8F76DEFC2B068F7500693365 /* TekonNewPOC.app */;
@@ -197,7 +238,7 @@
 			);
 			mainGroup = 8F76DEF32B068F7500693365;
 			packageReferences = (
-				8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */,
+				8F2B93ED2B1876DC004B594D /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 8F76DEFD2B068F7500693365 /* Products */;
 			projectDirPath = "";
@@ -215,7 +256,11 @@
 			files = (
 				8F76DF0C2B068F7700693365 /* LaunchScreen.storyboard in Resources */,
 				8F2B93D62B15CEA8004B594D /* test1.mp4 in Resources */,
+				8F2B93E22B171B88004B594D /* MediaListTableViewCell.xib in Resources */,
 				8F76DF092B068F7700693365 /* Assets.xcassets in Resources */,
+				8F2B93DA2B17155B004B594D /* aTableViewCell.xib in Resources */,
+				8F2B93E82B1747CE004B594D /* MediaDetailsViewController.xib in Resources */,
+				8F2B93DE2B171B03004B594D /* MediaListViewController.xib in Resources */,
 				8F76DF072B068F7500693365 /* Main.storyboard in Resources */,
 				8F76DF222B07629B00693365 /* MediaViewController.xib in Resources */,
 			);
@@ -229,6 +274,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */,
+				8F2B93D92B17155B004B594D /* aTableViewCell.swift in Sources */,
+				8F2B93E12B171B88004B594D /* MediaListTableViewCell.swift in Sources */,
+				8F2B93DD2B171B03004B594D /* MediaListViewController.swift in Sources */,
 				8F2B93D42B14AB95004B594D /* AlertManager.swift in Sources */,
 				8F76DF1E2B07624D00693365 /* ExtentionClass.swift in Sources */,
 				8F76DF1D2B07624D00693365 /* HelperClass.swift in Sources */,
@@ -239,6 +287,7 @@
 				8F76DF2C2B089F6E00693365 /* EnumClass.swift in Sources */,
 				8F76DF282B076FF700693365 /* StructureClass.swift in Sources */,
 				8F76DF152B07622B00693365 /* BaseViewController.swift in Sources */,
+				8F2B93E72B1747CE004B594D /* MediaDetailsViewController.swift in Sources */,
 				8F76DF1C2B07624D00693365 /* FilePathHelperClass.swift in Sources */,
 				8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */,
 				8F76DF262B076F6200693365 /* MediaFileHandler.swift in Sources */,
@@ -249,6 +298,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F2B93F12B1876E8004B594D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 8F2B93F02B1876E8004B594D /* Alamofire */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		8F76DF052B068F7500693365 /* Main.storyboard */ = {
@@ -478,7 +534,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+		8F2B93ED2B1876DC004B594D /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
 			requirement = {
@@ -489,9 +545,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		8F2B93CD2B0FC25B004B594D /* Alamofire */ = {
+		8F2B93EE2B1876DC004B594D /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 8F2B93CC2B0FC25B004B594D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			package = 8F2B93ED2B1876DC004B594D /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		8F2B93F02B1876E8004B594D /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8F2B93ED2B1876DC004B594D /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */

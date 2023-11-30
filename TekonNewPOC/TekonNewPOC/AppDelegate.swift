@@ -5,6 +5,10 @@
 //  Created by Muhammed Ayaz on 16/11/23.
 //
 
+/*
+ alamofire package URL "https://github.com/Alamofire/Alamofire.git"
+ */
+
 import UIKit
 
 @main

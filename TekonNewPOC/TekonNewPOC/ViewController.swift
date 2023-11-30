@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             // your function here
-            self.SwitchToMediaViewController()
+            self.SwitchToMediaListViewController()
         }
     }
     
@@ -31,5 +31,14 @@ class ViewController: UIViewController {
         self.present(viewController, animated: false, completion: nil)
     }
 
+    
+    func SwitchToMediaListViewController () {
+        
+        // Register Nib
+        let viewController = MediaListViewController(nibName: "MediaListViewController", bundle: nil)
+        viewController.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
+        self.present(viewController, animated: false, completion: nil)
+    }
+    
 }
 

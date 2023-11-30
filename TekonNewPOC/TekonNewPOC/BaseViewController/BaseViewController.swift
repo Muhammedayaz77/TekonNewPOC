@@ -6,8 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
+
+
+var g_UploadFileDetailsArray = [StructUploadFileDetails]()
+var g_selectedFileIndex : Int = 0
 
 class BaseViewController: UIViewController {
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()

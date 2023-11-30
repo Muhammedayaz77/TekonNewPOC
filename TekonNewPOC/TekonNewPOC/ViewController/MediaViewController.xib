@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaViewController" customModule="TekonNewPOC" customModuleProvider="target">
             <connections>
+                <outlet property="aTableView" destination="CLA-4L-SfU" id="Kvz-kb-dx0"/>
                 <outlet property="uploadPresentLabel" destination="zAY-eb-58z" id="Q1d-xA-cjg"/>
                 <outlet property="uploadProgressBar" destination="sFx-qT-yXW" id="b0f-yb-KLE"/>
                 <outlet property="uploadStatusLabel" destination="0WD-Ns-3yT" id="o8R-ZM-hHH"/>
@@ -34,6 +35,10 @@
                     <rect key="frame" x="0.0" y="364" width="414" height="498"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="9bg-tU-FeA"/>
+                        <outlet property="delegate" destination="-1" id="EZ4-2W-YBg"/>
+                    </connections>
                 </tableView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="587-V8-lTs">
                     <rect key="frame" x="20" y="114" width="374" height="31"/>
@@ -57,7 +62,7 @@
                         <action selector="uploadFileBtnPress:" destination="-1" eventType="touchUpInside" id="WGg-Ke-bqF"/>
                     </connections>
                 </button>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="sFx-qT-yXW">
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sFx-qT-yXW">
                     <rect key="frame" x="20" y="215" width="374" height="4"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="4" id="7XK-4h-FXK"/>

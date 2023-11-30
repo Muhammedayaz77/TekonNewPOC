@@ -234,6 +234,7 @@ extension AttachmentHandler: UIImagePickerControllerDelegate, UINavigationContro
             //compressWithSessionStatusFunc(videoUrl)
         }
         else{
+            AlertManager.sharedInstance.alertWindow(title: "Error", message: "Something went wrong in  video")
             print("Something went wrong in  video")
         }
         currentVC?.dismiss(animated: true, completion: nil)

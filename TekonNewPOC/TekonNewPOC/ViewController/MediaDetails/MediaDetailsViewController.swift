@@ -1,74 +1,54 @@
 //
-//  MediaViewController.swift
+//  MediaDetailsViewController.swift
 //  TekonNewPOC
 //
-//  Created by Muhammed Ayaz on 17/11/23.
+//  Created by Muhammed Ayaz on 29/11/23.
 //
 
 import UIKit
 
-class MediaViewController: BaseViewController {
-
-    @IBOutlet weak var uploadPresentLabel: UILabel!
+class MediaDetailsViewController: BaseViewController {
+    
     @IBOutlet weak var uploadStatusLabel: UILabel!
+    @IBOutlet weak var uploadPresentLabel: UILabel!
     @IBOutlet weak var uploadProgressBar: UIProgressView!
-    
-    @IBOutlet weak var aTableView: UITableView!
-    
-    
-    
     
     //declar Globale vaibale for access in all over
     var g_UploadFileDetails : StructUploadFileDetails = StructUploadFileDetails()
     
     
     
-    
     override func viewDidLoad() {
-        super.viewDidLoad()
+        
+        print("g_UploadFileDetailsArray",g_UploadFileDetailsArray)
+        
+        
+        g_UploadFileDetails = g_UploadFileDetailsArray[g_selectedFileIndex]
         
         uploadStatusLabel.text = "Reddy to Upload"
-        let fileName = "test1.mp4"
-        let fileBundelURL = getFilePathFromBundel(fileName: fileName)!
-        do {
-            let data = try Data(contentsOf: URL(fileURLWithPath: fileBundelURL))
-            saveFileInDocument(fileData: data, fileName: fileName)
-    } catch {
-        print("Error: \(error)")
-    }
-        
-        
-        
         updateProgresBar(numberOfUploadedFile: 0)
-        setBasicObj(fileName: fileName)
         
-        appCameToForeground()
-        if fileName != g_UploadFileDetails.fileInfo?.fileName {
-            
-            //Get file Info
-            let fileInfoObj : StructFileInfo = getFileDetails(fileName: fileName)
-            //Split Video In chunks
-            splitVideoInto5MBChunks(fileInfo: fileInfoObj)
-            //Fill Goble Varibale
-            g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
-            
-            updateProgresBar(numberOfUploadedFile: 0)
-        }
-   
+        super.viewDidLoad()
+        
+        
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
         
+        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+             
         notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+
+        // Do any additional setup after loading the view.
     }
     
-    func setBasicObj(fileName : String) {
-        //Get file Info
-        let fileInfoObj : StructFileInfo = getFileDetails(fileName: fileName)
-        //Split Video In chunks
-        splitVideoInto5MBChunks(fileInfo: fileInfoObj)
-        //Fill Goble Varibale
-        g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
-        
+
+    
+    
+    func updateProgresBar (numberOfUploadedFile : Int) {
+        runOnMainQueue {
+            let progressValue = Float(numberOfUploadedFile) /  Float(self.g_UploadFileDetails.totalNumberOfChuncks!)
+            self.uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
+            self.uploadProgressBar.setProgress(progressValue, animated: true)
+        }
     }
     
     
@@ -85,84 +65,14 @@ class MediaViewController: BaseViewController {
        }
    }
     
-    @IBAction func openGallaryBtnPress(_ sender: Any) {
-        AttachmentHandler.shared.showAttachmentActionSheet(vc: self)
-        AttachmentHandler.shared.imagePickedBlock = { (image) in
-            print("image here i am")
-        /* get your image here */
-        }
-        AttachmentHandler.shared.videoPickedBlock = { (videourl) in
-            print("videoURL here i am")
-            var fileNameWithoutExt = "test.mp4"
-            do {
-               // fileNameStr = getFileNameFromURL(fileURL: videourl)
-                fileNameWithoutExt = getFileNameWithoutExtension(fileURL: videourl)
-                
-                fileNameWithoutExt =   fileNameWithoutExt.appending(".mp4")
-                let data = try Data(contentsOf: videourl)
-                saveFileInDocument(fileData: data, fileName: fileNameWithoutExt)
-                
-                
-            } catch {
-                print("Error: \(error)")
-            }
-            self.setBasicObj(fileName: fileNameWithoutExt)
-        }
-        print("DocumentDirectoriesPath", getDocumentDirectoriesPath())
+    @IBAction func backBtnPress(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
     }
-    
-    
-    
     
     @IBAction func uploadFileBtnPress(_ sender: Any) {
         uploadStatusLabel.text = "Upload started"
         callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
     }
-    
-    
-    func updateProgresBar (numberOfUploadedFile : Int) {
-       
-        runOnMainQueue {
-            let progressValue = Float(numberOfUploadedFile) /  Float(self.g_UploadFileDetails.totalNumberOfChuncks!)
-            self.uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
-            self.uploadProgressBar.setProgress(progressValue, animated: true)
-        }
-    }
-    
-    
-    func getFileDetails(fileName : String) ->  StructFileInfo {
-        let fileURL = getDocumentDirectoriesPathURL().appendingPathComponent(fileName)
-        let filePath = getDocumentDirectoriesPath().appendSlash.appending(fileName)
-        let fileExtention = getFileExtensionFromURL(fileURL: fileURL)
-        let fileNameWithoutExt = getFileNameWithoutExtension(fileURL: fileURL)
-        
-        let fileInfo = StructFileInfo(fileName: fileName, filePath: filePath, fileExtention: fileExtention, fileURL: fileURL, fileNameWithoutExt: fileNameWithoutExt)
-        return fileInfo
-    }
-    
-    func getUploadFileDetails(fileInfoObj : StructFileInfo) ->  StructUploadFileDetails {
-        
-        let fileManager = FileManager.default
-        let folderPath = getDocumentDirectoriesPathURL().appendingPathComponent(fileInfoObj.fileNameWithoutExt)
-        let chunkFileURLArray = try! fileManager.contentsOfDirectory(at: folderPath, includingPropertiesForKeys: nil).sorted { $0.path < $1.path }
-        
-        var chunkFilePathArray = [String]()
-        for url in chunkFileURLArray {
-            //chunkFilePathArray.append(try! String(contentsOf: url))
-            chunkFilePathArray.append(url.path)
-        }
-        
-        var ETagArray = [String]()
-        for _ in 1...chunkFileURLArray.count {
-            
-            ETagArray.append("")
-        }
-        
-        let uploadFileDetailsObj = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray)
-        
-        return uploadFileDetailsObj
-    }
-    
     
     
     func callCreateMultipartUpload(uploadFileDetails: StructUploadFileDetails) {
@@ -266,11 +176,6 @@ class MediaViewController: BaseViewController {
     
     
     
-    
-    
-    
-    
-    
     func UploadPUTAPIResponceHandler (responceUploadedFile: StructAPIResUploadedFile, uploadCount : inout Int ,group : DispatchGroup , uploadFileDetails: StructUploadFileDetails) {
     
         
@@ -299,52 +204,5 @@ class MediaViewController: BaseViewController {
         group.leave()
     }
     
-    
-    @objc func openAttachemntList(inedx:Int) {
-        
-    }
-    
-}
 
-extension MediaViewController : UITableViewDelegate, UITableViewDataSource {
-    
-    
-    //MARK: - TableView
-    func numberOfSections(in tableView: UITableView) -> Int {
-        // Return the number of sections.
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // Return the number of rows in the section.
-        // If you're serving data from an array, return the length of the array:
-        return 10
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    // Customize the appearance of table view cells.
-    
-    
-    
-    //MARK: - cell For Row At indexPath
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "aTableViewCellId", for: indexPath) as! aTableViewCell
-        
-        
-//        cell.openGallaryBtn.addTarget(self, action:#selector(openAttachemntList(inedx:indexPath.row)), for: .touchUpInside)
-        
-        
-        return cell
-    }
-    
-    //MARK: - did Select Row At indexPath
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        
-        
-    }
-    
 }
