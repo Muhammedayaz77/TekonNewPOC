@@ -15,22 +15,44 @@ class MediaListViewController: BaseViewController {
     
     var g_VideoThumArray = [UIImage]()
 
+  
     
     override func viewDidLoad() {
         
         print("DocumentDirectoriesPath", getDocumentDirectoriesPath())
+        
+        if (UserDefaltClass.shared.getUploadFileDetails() != nil) {
+            g_UploadFileDetailsArray = UserDefaltClass.shared.getUploadFileDetails()!
+            
+            
+            print("g_UploadFileDetailsArray :: ",g_UploadFileDetailsArray)
+            
+            
+            for (index, UploadFileDetail) in g_UploadFileDetailsArray.enumerated().reversed() {
+                
+                
+                if fileExistsAtpath(pathStr: g_UploadFileDetailsArray[index].fileInfo!.filePath) {
+                        g_VideoThumArray.append(createThumbnailOfVideo(url: UploadFileDetail.fileInfo!.fileURL)!)
+                } else {
+                    
+                    deleteRowAt(index: index)
+                    showAlert(withTitle: "remove", withMessage: "file no exist at path")
+                }
+            }
+        }
+        
+        
+       
+        
         
         initializeCellWithIdentifier(aTableView: mediaListTableView, nibName: "MediaListTableViewCell", cellIdentifier: "mediaListCellId")
         mediaListTableView.dataSource = self
         mediaListTableView.delegate = self
         super.viewDidLoad()
         
-        
-
         // Do any additional setup after loading the view.
     }
-    
-    
+
 
 
     /*
@@ -66,7 +88,7 @@ class MediaListViewController: BaseViewController {
             var fileNameWithoutExt = "test.mp4"
             do {
                // fileNameStr = getFileNameFromURL(fileURL: videourl)
-                fileNameWithoutExt = getFileNameWithoutExtension(fileURL: videourl)
+                fileNameWithoutExt = getFileNameWithoutExtension(fileURL: videourl).replacingOccurrences(of: "trim.", with: "")
                 
                 fileNameWithoutExt =   fileNameWithoutExt.appending(".mp4")
                 let data = try Data(contentsOf: videourl)
@@ -83,10 +105,22 @@ class MediaListViewController: BaseViewController {
             }
     
             self.setBasicObj(fileName: fileNameWithoutExt, index: index)
+            
+            print("openGellary g_UploadFileDetailsArray : ",g_UploadFileDetailsArray)
             self.mediaListTableView.reloadData()
         }
     }
     
+    func deleteRowAt (index : Int) {
+        //remove file
+        RemoveFileAtPath(FilePath: g_UploadFileDetailsArray[index].fileInfo!.filePath)
+        //remove folder
+        let folderPath = removeFileExtension(from: g_UploadFileDetailsArray[index].fileInfo!.filePath)!
+        RemoveFileAtPath(FilePath: folderPath)
+        //remove object from the array index
+        g_UploadFileDetailsArray.remove(at: index)
+        g_VideoThumArray.remove(at: index)
+    }
     
     
     func setBasicObj(fileName :String, index :Int ) {
@@ -131,15 +165,15 @@ class MediaListViewController: BaseViewController {
             ETagArray.append("")
         }
         
-        let uploadFileDetailsObj = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray)
+        let uploadFileDetailsObj = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray, uploadStatus: .ReddyToUpload)
         
         return uploadFileDetailsObj
     }
     
+    
     func switchToMediaDeatilsScreen( index: Int) {
         g_selectedFileIndex = index
         
-        print("g_UploadFileDetailsArray",g_UploadFileDetailsArray)
         // Register Nib
         let viewController = MediaDetailsViewController(nibName: "MediaDetailsViewController", bundle: nil)
         viewController.modalPresentationStyle = .fullScreen //or .overFullScreen for transparency
@@ -200,6 +234,14 @@ extension MediaListViewController : UITableViewDelegate, UITableViewDataSource {
         switchToMediaDeatilsScreen(index: indexPath.row)
    
         
+    }
+    
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            deleteRowAt(index: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
     
 }

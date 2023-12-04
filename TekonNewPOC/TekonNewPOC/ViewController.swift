@@ -10,6 +10,13 @@ import UIKit
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
+        
+        
+        print("DocumentDirectoriesPath", getDocumentDirectoriesPath())
+        
+        AppStateManager.shared.appState
+        
+        
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }

@@ -96,6 +96,7 @@ func createThumbnailOfVideo(url :URL) -> UIImage? {
         return thumbnail
     } catch {
         print(error.localizedDescription)
+        AlertManager.sharedInstance.alertWindow(title: "Error createThumbnailOfVideo", message: error.localizedDescription)
         return nil
     }
 }

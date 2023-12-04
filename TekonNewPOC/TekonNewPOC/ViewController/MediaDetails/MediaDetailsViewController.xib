@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaDetailsViewController" customModule="TekonNewPOC" customModuleProvider="target">
             <connections>
+                <outlet property="logTextView" destination="FcF-2k-EaB" id="eRu-ea-fDf"/>
                 <outlet property="uploadPresentLabel" destination="oV8-EK-elS" id="bvz-J8-AMl"/>
                 <outlet property="uploadProgressBar" destination="YXo-oc-Xjr" id="zQL-uE-DFo"/>
                 <outlet property="uploadStatusLabel" destination="iAV-m3-Mic" id="hMz-g1-x5K"/>
@@ -72,6 +73,13 @@
                         <action selector="backBtnPress:" destination="-1" eventType="touchUpInside" id="LMC-4p-aat"/>
                     </connections>
                 </button>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="FcF-2k-EaB">
+                    <rect key="frame" x="20" y="468" width="374" height="394"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -83,17 +91,24 @@
                 <constraint firstItem="BmX-lE-2rV" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="HmO-j3-jOH"/>
                 <constraint firstItem="YXo-oc-Xjr" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="ILc-n1-kri"/>
                 <constraint firstItem="cO5-2C-jsa" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="Lpm-2l-rg5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="FcF-2k-EaB" secondAttribute="trailing" constant="20" id="M2v-t3-heK"/>
+                <constraint firstItem="FcF-2k-EaB" firstAttribute="top" secondItem="cO5-2C-jsa" secondAttribute="bottom" constant="170" id="MIs-xF-DBQ"/>
                 <constraint firstItem="oV8-EK-elS" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="NKD-VT-MkW"/>
                 <constraint firstItem="YXo-oc-Xjr" firstAttribute="top" secondItem="oV8-EK-elS" secondAttribute="bottom" constant="5" id="XGJ-yW-ALB"/>
                 <constraint firstItem="iAV-m3-Mic" firstAttribute="top" secondItem="BmX-lE-2rV" secondAttribute="bottom" constant="50" id="eZH-5W-mOb"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="iAV-m3-Mic" secondAttribute="trailing" constant="20" id="hVp-UP-Z9x"/>
+                <constraint firstItem="FcF-2k-EaB" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="iOH-py-o5R"/>
                 <constraint firstItem="oV8-EK-elS" firstAttribute="top" secondItem="iAV-m3-Mic" secondAttribute="bottom" constant="20" id="ibN-7g-kpL"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="cO5-2C-jsa" secondAttribute="trailing" constant="20" id="pW9-eB-eE8"/>
+                <constraint firstItem="FcF-2k-EaB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="rpk-A6-nDb"/>
             </constraints>
             <point key="canvasLocation" x="137.68115942028987" y="113.83928571428571"/>
         </view>
     </objects>
     <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -35,6 +35,7 @@ class MediaViewController: BaseViewController {
             saveFileInDocument(fileData: data, fileName: fileName)
     } catch {
         print("Error: \(error)")
+        
     }
         
         
@@ -42,7 +43,6 @@ class MediaViewController: BaseViewController {
         updateProgresBar(numberOfUploadedFile: 0)
         setBasicObj(fileName: fileName)
         
-        appCameToForeground()
         if fileName != g_UploadFileDetails.fileInfo?.fileName {
             
             //Get file Info
@@ -54,11 +54,6 @@ class MediaViewController: BaseViewController {
             
             updateProgresBar(numberOfUploadedFile: 0)
         }
-   
-        let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-        
-        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
     
     func setBasicObj(fileName : String) {
@@ -70,20 +65,7 @@ class MediaViewController: BaseViewController {
         g_UploadFileDetails = getUploadFileDetails(fileInfoObj: fileInfoObj)
         
     }
-    
-    
-    @objc func appMovedToBackground() {
-       print("app enters background")
-        UserDefaltClass().setUploadFileDetails(UploadFileDetails: g_UploadFileDetails)
-   }
 
-   @objc func appCameToForeground() {
-       print("app enters foreground")
-       let UploadFileDetails = UserDefaltClass().getUploadFileDetails()
-       if(UploadFileDetails != nil ) {
-           g_UploadFileDetails = UploadFileDetails!
-       }
-   }
     
     @IBAction func openGallaryBtnPress(_ sender: Any) {
         AttachmentHandler.shared.showAttachmentActionSheet(vc: self)

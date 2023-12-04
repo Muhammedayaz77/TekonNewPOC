@@ -110,3 +110,44 @@ func saveFileAtPath (fileData : Data, fileURL : URL)  {
         print("Error: \(error)")
     }
 }
+
+
+
+func RemoveFileAtPath(FilePath : String)  {
+    
+let fileManager = FileManager.default
+
+do {
+    try fileManager.removeItem(atPath: FilePath)
+    print("Folder removed successfully")
+} catch {
+    print("Error removing folder: \(error)")
+}
+}
+
+
+
+func removeFileExtension(from filePath: String) -> String? {
+    
+    // Create a URL from the file path
+        guard let url = URL(string: filePath) else {
+            return nil
+        }
+
+        // Remove the file extension
+        let modifiedURL = url.deletingPathExtension
+
+        // Get the path as a string
+    let modifiedPath = modifiedURL().path
+    
+    print("modifiedPath", modifiedPath)
+
+        return modifiedPath
+    
+    
+    
+    
+//    let fileURL = URL(fileURLWithPath: fileName)
+//    let fileNameWithoutExtension = fileURL.deletingPathExtension().lastPathComponent
+//    return fileNameWithoutExtension
+}

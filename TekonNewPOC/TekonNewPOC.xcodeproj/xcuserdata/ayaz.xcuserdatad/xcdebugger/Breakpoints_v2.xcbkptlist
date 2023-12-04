@@ -7,48 +7,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E9512037-4991-4946-A9CE-2B3506F073C8"
+            uuid = "C6EF7386-26B0-42F9-81BB-485F60AF8EEF"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TekonNewPOC/ViewController/ListMedia/MediaListViewController.swift"
+            filePath = "TekonNewPOC/Model/UserDefaltClass.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "81"
-            endingLineNumber = "81"
-            landmarkName = "openGellary(index:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "054AFC7D-A914-4F9F-8495-D3010AD1DF7F"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TekonNewPOC/ViewController/MediaDetails/MediaDetailsViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "61B99EA5-1905-47D1-B2A1-9C938D8110FF"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TekonNewPOC/ViewController/ListMedia/MediaListViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "142"
-            endingLineNumber = "142"
-            landmarkName = "switchToMediaDeatilsScreen(index:)"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "updateFilePath(UploadFileDetail:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

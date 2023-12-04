@@ -12,3 +12,12 @@ enum enumHttpMethod: String {
     case Put = "Put"
 }
 
+
+enum enumUploadStatus: String,Codable {
+    case ReddyToUpload = "Reddy To Upload"
+    case Uploding = "Uploding..."
+    case UploadComplete = "Upload Complete."
+    init(){
+        self = enumUploadStatus.ReddyToUpload
+    }
+}

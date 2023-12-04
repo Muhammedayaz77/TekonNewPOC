@@ -12,7 +12,7 @@ class MediaDetailsViewController: BaseViewController {
     @IBOutlet weak var uploadStatusLabel: UILabel!
     @IBOutlet weak var uploadPresentLabel: UILabel!
     @IBOutlet weak var uploadProgressBar: UIProgressView!
-    
+    @IBOutlet weak var logTextView: UITextView!
     //declar Globale vaibale for access in all over
     var g_UploadFileDetails : StructUploadFileDetails = StructUploadFileDetails()
     
@@ -20,57 +20,49 @@ class MediaDetailsViewController: BaseViewController {
     
     override func viewDidLoad() {
         
-        print("g_UploadFileDetailsArray",g_UploadFileDetailsArray)
-        
-        
         g_UploadFileDetails = g_UploadFileDetailsArray[g_selectedFileIndex]
         
-        uploadStatusLabel.text = "Reddy to Upload"
-        updateProgresBar(numberOfUploadedFile: 0)
+        uploadStatusLabel.text = g_UploadFileDetails.uploadStatus?.rawValue
+        updateProgresBar(numberOfUploadedFile: getUploadCount())
         
         super.viewDidLoad()
-        
-        
-        let notificationCenter = NotificationCenter.default
-        
-        notificationCenter.addObserver(self, selector: #selector(appMovedToBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
-             
-        notificationCenter.addObserver(self, selector: #selector(appCameToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-
         // Do any additional setup after loading the view.
     }
-    
-
-    
     
     func updateProgresBar (numberOfUploadedFile : Int) {
         runOnMainQueue {
             let progressValue = Float(numberOfUploadedFile) /  Float(self.g_UploadFileDetails.totalNumberOfChuncks!)
             self.uploadPresentLabel.text = String(format: "%.2f %%", progressValue*100)
             self.uploadProgressBar.setProgress(progressValue, animated: true)
+            
+            self.PrintLog(logStr: "\n")
         }
     }
     
     
-    @objc func appMovedToBackground() {
-       print("app enters background")
-        UserDefaltClass().setUploadFileDetails(UploadFileDetails: g_UploadFileDetails)
-   }
-
-   @objc func appCameToForeground() {
-       print("app enters foreground")
-       let UploadFileDetails = UserDefaltClass().getUploadFileDetails()
-       if(UploadFileDetails != nil ) {
-           g_UploadFileDetails = UploadFileDetails!
-       }
-   }
+    func getUploadCount () -> Int {
+        var uploadCount = 0
+        for i in 0...g_UploadFileDetails.ETagArray.count-1 {
+            if g_UploadFileDetails.ETagArray[i] != "" {
+                print("not empty");
+                uploadCount = uploadCount+1
+            }
+        }
+        return uploadCount
+    }
+    
+   
     
     @IBAction func backBtnPress(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func uploadFileBtnPress(_ sender: Any) {
-        uploadStatusLabel.text = "Upload started"
+        
+        g_UploadFileDetails.uploadStatus = enumUploadStatus.Uploding
+        g_UploadFileDetailsArray[g_selectedFileIndex].uploadStatus = enumUploadStatus.Uploding
+        
+        uploadStatusLabel.text = g_UploadFileDetails.uploadStatus?.rawValue
         callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
     }
     
@@ -91,6 +83,7 @@ class MediaDetailsViewController: BaseViewController {
         APIHander().APICreateMultipartUpload(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
         //set respoce in globle variable
         self.g_UploadFileDetails.ResCreateMultipartUpload = responceCreateMultipartUpload
+        g_UploadFileDetailsArray[g_selectedFileIndex].ResCreateMultipartUpload = responceCreateMultipartUpload
         //call Multi part per signed URL
             self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
         }
@@ -112,13 +105,15 @@ class MediaDetailsViewController: BaseViewController {
             (responceMultipartPreSignedUrl) in
             
             self.g_UploadFileDetails.MultiPartPreSignedUrlArray = responceMultipartPreSignedUrl
+            g_UploadFileDetailsArray[g_selectedFileIndex].MultiPartPreSignedUrlArray = responceMultipartPreSignedUrl
+            
+            
             self.callUploadPUTAPI(uploadFileDetails: self.g_UploadFileDetails)
         }
     }
     
     func callUploadPUTAPI (uploadFileDetails: StructUploadFileDetails) {
         
-        print("end callUploadPUTAPI")
         let group = DispatchGroup()
         var uploadCount = 0
         updateProgresBar(numberOfUploadedFile: uploadCount)
@@ -141,7 +136,6 @@ class MediaDetailsViewController: BaseViewController {
             
             group.enter()
             
-            print(" callUploadPUTAPI  for loop")
             APIHander().APIUpload (uploadFileDetails: uploadFileDetails, index: j) { responceUploadedFile in
                 runOnMainQueue {
                     self.uploadStatusLabel.text = "files Uploading... to server"
@@ -151,15 +145,19 @@ class MediaDetailsViewController: BaseViewController {
         }
         
         group.notify(queue: .main) {
-            self.uploadStatusLabel.text = "all files Upload to server"
-            print("All uploads completed")
+            
+            
+            self.g_UploadFileDetails.uploadStatus = enumUploadStatus.UploadComplete
+            g_UploadFileDetailsArray[g_selectedFileIndex].uploadStatus = enumUploadStatus.UploadComplete
+            
+            self.uploadStatusLabel.text = self.g_UploadFileDetails.uploadStatus?.rawValue
+            self.PrintLog(logStr: "All uploads completed")
             self.callCompleteMultipartUpload(uploadFileDetails: self.g_UploadFileDetails)
         }
     }
     
     func callCompleteMultipartUpload (uploadFileDetails: StructUploadFileDetails) {
         
-        print(" callCompleteMultipartUpload")
 //        //alamofire
 //        APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
 //            print(responceCompleteMultipartUpload)
@@ -170,7 +168,6 @@ class MediaDetailsViewController: BaseViewController {
         APIHander().APICompleteMultipartUpload(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
             print(responceCompleteMultipartUpload)
         }
-        print("end callCompleteMultipartUpload")
     }
     
     
@@ -179,11 +176,10 @@ class MediaDetailsViewController: BaseViewController {
     func UploadPUTAPIResponceHandler (responceUploadedFile: StructAPIResUploadedFile, uploadCount : inout Int ,group : DispatchGroup , uploadFileDetails: StructUploadFileDetails) {
     
         
-        uploadCount = uploadCount+1
-        self.updateProgresBar(numberOfUploadedFile: uploadCount)
         
         let responceURL = responceUploadedFile.ResponceURL
-        print("-------------------+++++++--------------------")
+        PrintLog(logStr: "-------------------+++++++--------------------")
+        
         
         for i in 0...uploadFileDetails.chunkFileURLArray.count-1 {
             
@@ -193,9 +189,13 @@ class MediaDetailsViewController: BaseViewController {
             if preSignedUrl == responceURL.absoluteString {
                 // Your code here
                 print("preSignedUrl ---",preSignedUrl)
-                print("URLs are equal",responceUploadedFile.Etag)
+                PrintLog(logStr: "URLs are equal")
+                PrintLog(logStr: responceUploadedFile.Etag)
                 
                 self.g_UploadFileDetails.ETagArray[i] = responceUploadedFile.Etag
+                g_UploadFileDetailsArray[g_selectedFileIndex].ETagArray[i] = responceUploadedFile.Etag
+                
+                self.updateProgresBar(numberOfUploadedFile: getUploadCount())
                 
             } else {
                 //print("URLs are not equal")
@@ -204,5 +204,13 @@ class MediaDetailsViewController: BaseViewController {
         group.leave()
     }
     
-
+    
+    func PrintLog(logStr : String) {
+        runOnMainQueue {
+            print(logStr)
+            
+            g_LogString.append("\n"+logStr)
+            self.logTextView.text = g_LogString
+        }
+    }
 }

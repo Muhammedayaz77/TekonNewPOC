@@ -12,6 +12,8 @@ import AVFoundation
 var g_UploadFileDetailsArray = [StructUploadFileDetails]()
 var g_selectedFileIndex : Int = 0
 
+var g_LogString : String = ""
+
 class BaseViewController: UIViewController {
     
     

@@ -30,14 +30,21 @@ class AppStateManager : NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
     }
 
-    @objc private func appDidEnterBackground() {
+    @objc  func appDidEnterBackground() {
         appState = .background
         // Handle background state
+        g_LogString.append("appDidEnter Background")
+        UserDefaltClass.shared.setUploadFileDetails(UploadFileDetails: g_UploadFileDetailsArray)
     }
 
-    @objc private func appWillEnterForeground() {
+    @objc  func appWillEnterForeground() {
         appState = .foreground
         // Handle foreground state
+        g_LogString.append("appWillEnter Foreground")
+        let UploadFileDetails = UserDefaltClass.shared.getUploadFileDetails()
+        if(UploadFileDetails != nil ) {
+            g_UploadFileDetailsArray = UploadFileDetails!
+        }
     }
 }
 /*

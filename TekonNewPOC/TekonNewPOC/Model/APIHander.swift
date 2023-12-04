@@ -34,6 +34,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
                     parameters = jsonString
                 }
             } catch {
+                
                 print("Error converting dictionary to JSON: \(error)")
             }
         
@@ -50,7 +51,8 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             print(String(describing: error))
             return
         }
-            
+        
+        g_LogString.append(String(data: data, encoding: .utf8)!)
         print(String(data: data, encoding: .utf8)!)
             
             do {
@@ -59,6 +61,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
                 completionBlock(apiResponse)
             } catch {
                 print("Error decoding JSON: \(error)")
+                AlertManager.sharedInstance.alertWindow(title: "Error", message: "APICreateMultipartUpload responce decoding JSON")
             }
         }
         
@@ -90,6 +93,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             }
         } catch {
             print("Error converting dictionary to JSON: \(error)")
+            AlertManager.sharedInstance.alertWindow(title: "Error", message: "APIGetMultipartPreSignedUrl responce decoding JSON")
         }
         
         let postData = parameters.data(using: .utf8)
@@ -129,7 +133,6 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
     //----------------------------------------------------------------
 
 
-
     func APICompleteMultipartUpload (uploadFileDetails : StructUploadFileDetails, completionBlock: @escaping (Any) -> Void)  {
         
         let url = baseURL.appending("completeMultipartUpload")
@@ -158,6 +161,8 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             }
         } catch {
             print("Error converting dictionary to JSON: \(error)")
+            
+            AlertManager.sharedInstance.alertWindow(title: "Error", message: "APICompleteMultipartUpload responce decoding JSON")
         }
         
         let postData = parameters.data(using: .utf8)
@@ -184,7 +189,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
 }
 
 
-
+    
     func APIUpload (uploadFileDetails : StructUploadFileDetails, index : Int, completionBlock: @escaping (StructAPIResUploadedFile) -> Void) {
         
         let preSignedUrl : StructPreSigned  = uploadFileDetails.MultiPartPreSignedUrlArray!.parts[index]
@@ -230,6 +235,8 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
                 for (key, value) in res.allHeaderFields {
                     if key as! String == "Etag" {
                         output.Etag = value as! String
+                        g_LogString.append("ETAG..")
+                        g_LogString.append(output.Etag)
                     }
                 }
               
@@ -265,6 +272,8 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
                 for (key, value) in res.allHeaderFields {
                     if key as! String == "Etag" {
                         output.Etag = value as! String
+                        g_LogString.append("ETAG..")
+                        g_LogString.append(output.Etag)
                     }
                 }
               

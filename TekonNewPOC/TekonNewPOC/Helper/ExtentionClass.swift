@@ -34,8 +34,8 @@ extension URL {
 
 extension String {
     func appendString (str : String) -> String {
-        self.appending(str)
-        return self
+        let newStr =  self.appending(str)
+        return newStr
     }
     
     

@@ -17,6 +17,8 @@ struct StructUploadFileDetails : Codable {
     var ETagArray = [String]()
     var MultiPartPreSignedUrlArray : StructAPIResMultipartPreSignedURL?
     var ResCreateMultipartUpload : StructAPIResCreateMultipartUpload?
+    var uploadStatus : enumUploadStatus?
+    
 }
 
 
