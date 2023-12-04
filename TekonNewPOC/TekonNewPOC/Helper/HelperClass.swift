@@ -93,6 +93,11 @@ func createThumbnailOfVideo(url :URL) -> UIImage? {
     do {
         let img = try assetImgGenerate.copyCGImage(at: time, actualTime: nil)
         let thumbnail = UIImage(cgImage: img)
+//        let fileName = getFileNameWithoutExtension(fileURL: url).appendDot.appendString(str: "jpeg")
+//        
+//        let thumbnailData = thumbnail.jpegData(compressionQuality: 1)!
+//        saveFileInDocument(fileData: thumbnailData, fileName:fileName)
+        
         return thumbnail
     } catch {
         print(error.localizedDescription)

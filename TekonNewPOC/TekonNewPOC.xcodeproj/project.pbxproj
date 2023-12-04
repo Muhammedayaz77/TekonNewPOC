@@ -21,6 +21,9 @@
 		8F2B93E72B1747CE004B594D /* MediaDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93E52B1747CE004B594D /* MediaDetailsViewController.swift */; };
 		8F2B93E82B1747CE004B594D /* MediaDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */; };
 		8F2B93EF2B1876DC004B594D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 8F2B93EE2B1876DC004B594D /* Alamofire */; };
+		8F2B93F62B1E82E5004B594D /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93F32B1E82E4004B594D /* Reachability.swift */; };
+		8F2B93F72B1E82E5004B594D /* InternetHandlerNewClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93F42B1E82E4004B594D /* InternetHandlerNewClass.swift */; };
+		8F2B93F82B1E82E5004B594D /* InternetHandlerClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F2B93F52B1E82E4004B594D /* InternetHandlerClass.swift */; };
 		8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DEFF2B068F7500693365 /* AppDelegate.swift */; };
 		8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF012B068F7500693365 /* SceneDelegate.swift */; };
 		8F76DF042B068F7500693365 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F76DF032B068F7500693365 /* ViewController.swift */; };
@@ -54,6 +57,9 @@
 		8F2B93E02B171B88004B594D /* MediaListTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaListTableViewCell.xib; sourceTree = "<group>"; };
 		8F2B93E52B1747CE004B594D /* MediaDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaDetailsViewController.swift; sourceTree = "<group>"; };
 		8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MediaDetailsViewController.xib; sourceTree = "<group>"; };
+		8F2B93F32B1E82E4004B594D /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		8F2B93F42B1E82E4004B594D /* InternetHandlerNewClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetHandlerNewClass.swift; sourceTree = "<group>"; };
+		8F2B93F52B1E82E4004B594D /* InternetHandlerClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InternetHandlerClass.swift; sourceTree = "<group>"; };
 		8F76DEFC2B068F7500693365 /* TekonNewPOC.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TekonNewPOC.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F76DEFF2B068F7500693365 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8F76DF012B068F7500693365 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +111,16 @@
 				8F2B93E62B1747CE004B594D /* MediaDetailsViewController.xib */,
 			);
 			path = MediaDetails;
+			sourceTree = "<group>";
+		};
+		8F2B93F22B1E82E4004B594D /* InternetHandler */ = {
+			isa = PBXGroup;
+			children = (
+				8F2B93F32B1E82E4004B594D /* Reachability.swift */,
+				8F2B93F42B1E82E4004B594D /* InternetHandlerNewClass.swift */,
+				8F2B93F52B1E82E4004B594D /* InternetHandlerClass.swift */,
+			);
+			path = InternetHandler;
 			sourceTree = "<group>";
 		};
 		8F76DEF32B068F7500693365 = {
@@ -166,6 +182,7 @@
 		8F76DF172B07624300693365 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				8F2B93F22B1E82E4004B594D /* InternetHandler */,
 				8F2B93C42B0F74E4004B594D /* UserDefaltClass.swift */,
 				8F2B93D12B137417004B594D /* AppStateManager.swift */,
 				8F2B93D32B14AB95004B594D /* AlertManager.swift */,
@@ -275,6 +292,7 @@
 			files = (
 				8F76DF312B08AE4E00693365 /* AlamofireWebserviceClass.swift in Sources */,
 				8F2B93D92B17155B004B594D /* aTableViewCell.swift in Sources */,
+				8F2B93F82B1E82E5004B594D /* InternetHandlerClass.swift in Sources */,
 				8F2B93E12B171B88004B594D /* MediaListTableViewCell.swift in Sources */,
 				8F2B93DD2B171B03004B594D /* MediaListViewController.swift in Sources */,
 				8F2B93D42B14AB95004B594D /* AlertManager.swift in Sources */,
@@ -291,8 +309,10 @@
 				8F76DF1C2B07624D00693365 /* FilePathHelperClass.swift in Sources */,
 				8F76DF002B068F7500693365 /* AppDelegate.swift in Sources */,
 				8F76DF262B076F6200693365 /* MediaFileHandler.swift in Sources */,
+				8F2B93F62B1E82E5004B594D /* Reachability.swift in Sources */,
 				8F2B93D22B137417004B594D /* AppStateManager.swift in Sources */,
 				8F76DF242B07665D00693365 /* AttachmentHandler.swift in Sources */,
+				8F2B93F72B1E82E5004B594D /* InternetHandlerNewClass.swift in Sources */,
 				8F76DF022B068F7500693365 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

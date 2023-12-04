@@ -21,6 +21,7 @@ class MediaDetailsViewController: BaseViewController {
     override func viewDidLoad() {
         
         g_UploadFileDetails = g_UploadFileDetailsArray[g_selectedFileIndex]
+        print("g_UploadFileDetails = ",g_UploadFileDetails)
         
         uploadStatusLabel.text = g_UploadFileDetails.uploadStatus?.rawValue
         updateProgresBar(numberOfUploadedFile: getUploadCount())
@@ -43,8 +44,9 @@ class MediaDetailsViewController: BaseViewController {
     func getUploadCount () -> Int {
         var uploadCount = 0
         for i in 0...g_UploadFileDetails.ETagArray.count-1 {
+            print("Etag = ",g_UploadFileDetails.ETagArray[i] )
             if g_UploadFileDetails.ETagArray[i] != "" {
-                print("not empty");
+               
                 uploadCount = uploadCount+1
             }
         }
@@ -59,16 +61,41 @@ class MediaDetailsViewController: BaseViewController {
     
     @IBAction func uploadFileBtnPress(_ sender: Any) {
         
+        if InternetHandlerNewClass.sharedInstance.internetStatus == .NOT_CONNECTED {
+            showAlert(withTitle: "Network Error", withMessage: "No internet connection")
+            return
+        }
+        
+        
+        
         g_UploadFileDetails.uploadStatus = enumUploadStatus.Uploding
         g_UploadFileDetailsArray[g_selectedFileIndex].uploadStatus = enumUploadStatus.Uploding
         
         uploadStatusLabel.text = g_UploadFileDetails.uploadStatus?.rawValue
-        callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
+       
+        
+        
+        if g_UploadFileDetails.ResCreateMultipartUpload?.UploadId != "" &&
+            g_UploadFileDetails.ResCreateMultipartUpload?.fileKey != ""
+        {
+            if (g_UploadFileDetails.MultiPartPreSignedUrlArray?.parts.count)! > 0 {
+                self.callUploadPUTAPI(uploadFileDetails: self.g_UploadFileDetails)
+            } else {
+                self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)
+            }
+        } else {
+            callCreateMultipartUpload(uploadFileDetails: g_UploadFileDetails)
+        }
+        
+        
     }
     
     
     func callCreateMultipartUpload(uploadFileDetails: StructUploadFileDetails) {
-        
+        if InternetHandlerNewClass.sharedInstance.internetStatus == .NOT_CONNECTED {
+            showAlert(withTitle: "Network Error", withMessage: "No internet connection")
+            return
+        }
         //alamofire
 //        APICreateMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { (responceCreateMultipartUpload) in
 //            //set respoce in globle variable
@@ -90,7 +117,10 @@ class MediaDetailsViewController: BaseViewController {
     }
     
     func callGetMultipartPreSignedUrl(uploadFileDetails : StructUploadFileDetails) {
-        
+        if InternetHandlerNewClass.sharedInstance.internetStatus == .NOT_CONNECTED {
+            showAlert(withTitle: "Network Error", withMessage: "No internet connection")
+            return
+        }
 //        //alamofire
 //        APIGetMultipartPreSignedUrlAlamofire(uploadFileDetails: uploadFileDetails) {
 //            (responceMultipartPreSignedUrl) in
@@ -113,7 +143,10 @@ class MediaDetailsViewController: BaseViewController {
     }
     
     func callUploadPUTAPI (uploadFileDetails: StructUploadFileDetails) {
-        
+        if InternetHandlerNewClass.sharedInstance.internetStatus == .NOT_CONNECTED {
+            showAlert(withTitle: "Network Error", withMessage: "No internet connection")
+            return
+        }
         let group = DispatchGroup()
         var uploadCount = 0
         updateProgresBar(numberOfUploadedFile: uploadCount)
@@ -157,7 +190,10 @@ class MediaDetailsViewController: BaseViewController {
     }
     
     func callCompleteMultipartUpload (uploadFileDetails: StructUploadFileDetails) {
-        
+        if InternetHandlerNewClass.sharedInstance.internetStatus == .NOT_CONNECTED {
+            showAlert(withTitle: "Network Error", withMessage: "No internet connection")
+            return
+        }
 //        //alamofire
 //        APICompleteMultipartUploadAlamofire(uploadFileDetails: uploadFileDetails) { responceCompleteMultipartUpload in
 //            print(responceCompleteMultipartUpload)

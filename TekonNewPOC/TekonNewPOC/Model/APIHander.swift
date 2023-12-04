@@ -178,9 +178,27 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
             print(String(describing: error))
             return
         }
+//
+//        if (response as? HTTPURLResponse)?.statusCode == 200
+//            {
+//            print("\(#function) \(response)")
+//        } else {
+//
+//            print("\(#function) \(response)")
+//        }
+            
+            
+            
         if let res = response as? HTTPURLResponse {
             print("APICompleteMultipartUpload allHeaderFields: ", res.allHeaderFields)
         }
+            guard let prettyPrintedJson = String(data: data, encoding: .utf8) else {
+                print("Error converting JSON data in String")
+                return
+            }
+            print("prettyPrintedJson = ",prettyPrintedJson)
+            
+            
         completionBlock(data)
         print(String(data: data, encoding: .utf8)!)
     }
@@ -202,7 +220,7 @@ class APIHander: NSObject, URLSessionDelegate, URLSessionTaskDelegate  {
         var request = URLRequest(url: URL(string: preSignedUrl.signedUrl)!,timeoutInterval: Double.infinity)
         
         if eTag != "" {
-            print("not empty");
+            print("not empty from API handerler");
             
             let output = StructAPIResUploadedFile(Etag: eTag, ResponceURL: request.url!)
             completionBlock(output)

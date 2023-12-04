@@ -12,8 +12,7 @@ class MediaListViewController: BaseViewController {
 
     
     @IBOutlet weak var mediaListTableView: UITableView!
-    
-    var g_VideoThumArray = [UIImage]()
+        var g_VideoThumArray = [UIImage]()
 
   
     
@@ -23,16 +22,19 @@ class MediaListViewController: BaseViewController {
         
         if (UserDefaltClass.shared.getUploadFileDetails() != nil) {
             g_UploadFileDetailsArray = UserDefaltClass.shared.getUploadFileDetails()!
-            
-            
             print("g_UploadFileDetailsArray :: ",g_UploadFileDetailsArray)
             
             
+            let placeholderImage = UIImage(named: "placeholder")!
+            // Initialize an array of a certain size with placeholder images
+            g_VideoThumArray = Array(repeating: placeholderImage, count: g_UploadFileDetailsArray.count)
+
+            
             for (index, UploadFileDetail) in g_UploadFileDetailsArray.enumerated().reversed() {
-                
-                
                 if fileExistsAtpath(pathStr: g_UploadFileDetailsArray[index].fileInfo!.filePath) {
-                        g_VideoThumArray.append(createThumbnailOfVideo(url: UploadFileDetail.fileInfo!.fileURL)!)
+                    g_VideoThumArray[index] = createThumbnailOfVideo(url: UploadFileDetail.fileInfo!.fileURL)!
+                    
+//                        g_VideoThumArray.append(createThumbnailOfVideo(url: UploadFileDetail.fileInfo!.fileURL)!)
                 } else {
                     
                     deleteRowAt(index: index)
