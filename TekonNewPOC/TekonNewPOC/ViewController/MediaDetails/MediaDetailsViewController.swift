@@ -74,11 +74,10 @@ class MediaDetailsViewController: BaseViewController {
         uploadStatusLabel.text = g_UploadFileDetails.uploadStatus?.rawValue
        
         
-        
         if g_UploadFileDetails.ResCreateMultipartUpload?.UploadId != "" &&
             g_UploadFileDetails.ResCreateMultipartUpload?.fileKey != ""
         {
-            if (g_UploadFileDetails.MultiPartPreSignedUrlArray?.parts.count)! > 0 {
+            if (g_UploadFileDetails.MultiPartPreSignedUrlArray?.parts[0].signedUrl != "")  {
                 self.callUploadPUTAPI(uploadFileDetails: self.g_UploadFileDetails)
             } else {
                 self.callGetMultipartPreSignedUrl(uploadFileDetails: self.g_UploadFileDetails)

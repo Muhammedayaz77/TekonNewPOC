@@ -167,7 +167,21 @@ class MediaListViewController: BaseViewController {
             ETagArray.append("")
         }
         
-        let uploadFileDetailsObj = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray, uploadStatus: .ReddyToUpload)
+//        var tempMultipartPreSignedURLArray = [StructAPIResMultipartPreSignedURL]
+        
+        let tempPreSigned =  [StructPreSigned(signedUrl: "", partNumber: 0)]
+        let tempMultipartPreSignedURLArray = StructAPIResMultipartPreSignedURL(parts: tempPreSigned)
+                
+        let tempCreateMultipart = StructAPIResCreateMultipartUpload(UploadId: "", fileKey: "")
+        
+
+        
+        
+        let uploadFileDetailsObj = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray, MultiPartPreSignedUrlArray: tempMultipartPreSignedURLArray, ResCreateMultipartUpload: tempCreateMultipart, uploadStatus: .ReddyToUpload)
+        
+        
+        
+        let uploadFileDetailsObj1 = StructUploadFileDetails(fileInfo: fileInfoObj, chunkFilePathArray: chunkFilePathArray, chunkFileURLArray: chunkFileURLArray, totalNumberOfChuncks: chunkFileURLArray.count, ETagArray: ETagArray, uploadStatus: .ReddyToUpload)
         
         return uploadFileDetailsObj
     }
